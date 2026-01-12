@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import ClientsPage from './pages/ClientsPage';
+import ProductsPage from './pages/ProductsPage';
+import ContractsPage from './pages/ContractsPage';
 import './App.css';
 
 function PrivateRoute({ children }) {
@@ -18,6 +21,30 @@ function App() {
           element={
             <PrivateRoute>
               <DashboardPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/clients"
+          element={
+            <PrivateRoute>
+              <ClientsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <PrivateRoute>
+              <ProductsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/contracts"
+          element={
+            <PrivateRoute>
+              <ContractsPage />
             </PrivateRoute>
           }
         />
