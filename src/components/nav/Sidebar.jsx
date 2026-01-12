@@ -30,7 +30,7 @@ export default function Sidebar() {
               onClick={() => navigate(item.path)}
               className="w-full flex items-center gap-4 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
             >
-              <span className="text-gray-600 flex-shrink-0">
+              <span className="text-gray-600">
                 <Icon />
               </span>
               <span
