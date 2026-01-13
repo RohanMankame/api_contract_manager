@@ -9,7 +9,7 @@ export default function CardRoute({ title, desc, Icon, path }) {
   return (
     <button
       onClick={() => navigate(path)}
-      className="group w-full h-40 bg-white border border-gray-200 rounded-lg p-6 text-left hover:shadow-lg transition-shadow duration-200 flex flex-col justify-between"
+      className="group w-full h-40 bg-white border border-gray-200 rounded-lg p-6 text-left hover:shadow-lg transition-shadow duration-200 flex flex-col justify-between cursor-pointer"
     >
       <div className="flex items-start gap-4">
         <div className="card-icon">
