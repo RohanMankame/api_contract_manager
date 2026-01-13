@@ -1,0 +1,31 @@
+/* src/styles/components/cardroute.css */
+.card-icon {
+  background-color: var(--color-neutral-50);
+  color: var(--color-neutral-400);
+  transition: background-color var(--transition-base), color var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+}
+
+.group:hover .card-icon,
+.group:focus .card-icon {
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-600);
+}
+
+.card-arrow {
+  color: var(--color-primary-500);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+}
+
+.group:hover .card-arrow,
+.group:focus .card-arrow {
+  opacity: 1;
+}
