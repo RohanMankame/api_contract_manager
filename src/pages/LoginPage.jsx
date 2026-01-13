@@ -46,7 +46,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="fixed inset-0 bg-primary-light flex items-center justify-center">
+    <div className="fixed inset-0 flex items-center justify-center">
       <div className="w-full max-w-md px-4">
         <div className="card">
           <h2 style={{ fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)' }} className="text-center text-neutral-900 mb-2">

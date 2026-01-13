@@ -5,17 +5,17 @@
 }
 
 :root {
-  /* Primary Colors - Soft Pastel Green */
-  --color-primary-50: #f0fdf4;
-  --color-primary-100: #bbf7d0;
-  --color-primary-200: #86efac;
-  --color-primary-300: #6ee7b7;
-  --color-primary-400: #4ade80;
-  --color-primary-500: #22c55e;
-  --color-primary-600: #16a34a;
-  --color-primary-700: #15803d;
-  --color-primary-800: #166534;
-  --color-primary-900: #145231;
+  /* Primary Colors - Soft Pastel Blue */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
 
   /* Neutral Colors - Light & Soft */
   --color-neutral-50: #fafafa;
