@@ -15,34 +15,35 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside
-      className="fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 shadow-sm z-40 transition-all duration-300"
-      style={{ width: isExpanded ? '250px' : '80px' }}
-      onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
+    <aside className="fixed left-0 top-16 bottom-0 bg-white border-r border-gray-200 shadow-sm z-40 transition-all duration-300" 
+    style={{ width: isExpanded ? '250px' : '80px' }} 
+    onMouseEnter={() => setIsExpanded(true)} 
+    onMouseLeave={() => setIsExpanded(false)} 
     >
-      <nav className="p-4 space-y-4">
+
+      <nav className="p-0 m-0 space-y-0">
         {navItems.map((item) => {
-          const Icon = item.icon;
-          return (
+            const Icon = item.icon;
+            return (
             <button
-              key={item.path}
-              onClick={() => navigate(item.path)}
-              className="w-full flex items-center gap-4 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                key={item.path}
+                onClick={() => navigate(item.path)}
+                className="w-full h-15 relative group flex items-center gap-3 pl-4 pr-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200"
             >
-              <span className="text-gray-600">
+                <span className="absolute left-0 top-0 bottom-0 w-1 bg-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                <span className="text-gray-600">
                 <Icon />
-              </span>
-              <span
+                </span>
+                <span
                 className="text-sm font-medium whitespace-nowrap transition-opacity duration-300"
                 style={{ opacity: isExpanded ? 1 : 0 }}
-              >
+                >
                 {item.name}
-              </span>
+                </span>
             </button>
-          );
+            );
         })}
-      </nav>
+        </nav>
     </aside>
   );
 }

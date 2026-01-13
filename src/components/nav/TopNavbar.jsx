@@ -10,7 +10,7 @@ export default function TopNavbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 w-full bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between shadow-sm z-50">
+    <nav className="fixed top-0 left-0 right-0 w-full bg-white border-b border-gray-200 px-8 h-16 flex items-center justify-between shadow-sm z-50">
       <h1 className="text-2xl font-semibold text-gray-900">API Contract Manager</h1>
       <button
         onClick={handleLogout}
