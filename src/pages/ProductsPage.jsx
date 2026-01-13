@@ -17,7 +17,7 @@ export default function ProductsPage() {
   ];
 
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 pl-6">
         <TopNavbar />
         <Sidebar />
   
@@ -28,7 +28,7 @@ export default function ProductsPage() {
           </div>
   
           <div className="mt-6 w-full">
-            <AgGridTable fetcher={fetchProducts} colDefs={productCols} gridHeight="600px" />
+            <AgGridTable fetcher={fetchProducts} colDefs={productCols} gridHeight="400px" />
           </div>
         </div>
       </div>

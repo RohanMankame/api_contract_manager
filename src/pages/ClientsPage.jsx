@@ -18,7 +18,7 @@ export default function ClientsPage() {
   ];
 
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 pl-6">
         <TopNavbar />
         <Sidebar />
   

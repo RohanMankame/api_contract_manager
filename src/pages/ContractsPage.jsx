@@ -19,7 +19,7 @@ export default function ContractsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pl-6">
       <TopNavbar />
       <Sidebar />
       <div className="ml-20 mt-20 p-8">
