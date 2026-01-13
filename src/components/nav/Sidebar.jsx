@@ -16,7 +16,7 @@ export default function Sidebar() {
 
   return (
     <aside className="fixed left-0 top-16 bottom-0 bg-white border-r border-gray-200 shadow-sm z-40 transition-all duration-300" 
-    style={{ width: isExpanded ? '250px' : '60px' }} 
+    style={{ width: isExpanded ? '12rem' : '3.5rem' }} 
     onMouseEnter={() => setIsExpanded(true)} 
     onMouseLeave={() => setIsExpanded(false)} 
     >
