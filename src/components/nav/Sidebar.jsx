@@ -16,7 +16,7 @@ export default function Sidebar() {
 
   return (
     <aside className="fixed left-0 top-16 bottom-0 bg-white border-r border-gray-200 shadow-sm z-40 transition-all duration-300" 
-    style={{ width: isExpanded ? '12rem' : '3.5rem' }} 
+    style={{ width: isExpanded ? '13rem' : '3.5rem' }} 
     onMouseEnter={() => setIsExpanded(true)} 
     onMouseLeave={() => setIsExpanded(false)} 
     >
@@ -28,14 +28,14 @@ export default function Sidebar() {
             <button
                 key={item.path}
                 onClick={() => navigate(item.path)}
-                className="w-full h-15 relative group flex items-center gap-3 pl-4 pr-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200"
+                className="w-full h-15 relative group flex items-center gap-3 pl-4 pr-4 py-2 text-black-700 hover:bg-gray-50 transition-colors duration-200"
             >
                 <span className="absolute left-0 top-0 bottom-0 w-1 bg-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                <span className="text-gray-600">
+                <span className="group-hover:text-green-500 group-focus:text-green-500 transition-colors duration-200">
                 <Icon />
                 </span>
                 <span
-                className="text-sm font-medium whitespace-nowrap transition-opacity duration-300"
+                className="text-m font-medium whitespace-nowrap transition-opacity duration-300"
                 style={{ opacity: isExpanded ? 1 : 0 }}
                 >
                 {item.name}
