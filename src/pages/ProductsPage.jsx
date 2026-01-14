@@ -16,13 +16,14 @@ export default function ProductsPage() {
   ];
 
     return (
-      <div className="min-h-screen bg-gray-50 pl-6">
+      <div className="min-h-screen bg-gray-50 ">
         <TopNavbar />
         <Sidebar />
   
+
         <div className="mt-16 text-left ">
           <div>
-            <h1 className="text-xl font-medium text-gray-900">Products</h1>
+            <h1 className="text-xl font-medium text-gray-900 ">Products</h1>
             <p>Product Page. Use table below to manage Products.</p>
           </div>
   

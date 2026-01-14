@@ -26,7 +26,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pl-6">
+    <div className="min-h-screen bg-gray-50 pl-3.5rem">
       <TopNavbar />
       <Sidebar />
 
