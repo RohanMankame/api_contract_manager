@@ -9,12 +9,12 @@ export default function ClientsPage() {
   };
 
   const clientCols = [
-    { field: 'id', headerName: 'ID', width: 110 },
-    { field: 'company_name', headerName: 'Company', flex: 1 },
+    { field: 'id', headerName: 'ID', flex: 2 },
+    { field: 'company_name', headerName: 'Company', flex: 2 },
     { field: 'email', headerName: 'Email', flex: 1 },
-    { field: 'phone_number', headerName: 'Phone', width: 160 },
-    { field: 'address', headerName: 'Address', flex: 1 },
-    { field: 'is_archived', headerName: 'Archived', width: 120 },
+    { field: 'phone_number', headerName: 'Phone', width: 1 },
+    { field: 'address', headerName: 'Address', flex: 3 },
+    
   ];
 
     return (

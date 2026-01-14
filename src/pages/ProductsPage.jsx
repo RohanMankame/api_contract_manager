@@ -10,10 +10,9 @@ export default function ProductsPage() {
   };
 
   const productCols = [
-    { field: 'id', headerName: 'ID', width: 110 },
+    { field: 'id', headerName: 'ID', flex: 2 },
     { field: 'api_name', headerName: 'API Name', flex: 1 },
-    { field: 'description', headerName: 'Description', flex: 2 },
-    { field: 'is_archived', headerName: 'Archived', width: 120 },
+    { field: 'description', headerName: 'Description', flex: 3 },
   ];
 
     return (

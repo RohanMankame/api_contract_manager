@@ -10,12 +10,12 @@ export default function ContractsPage() {
   };
 
   const contractCols = [
-    { field: 'id', headerName: 'ID', width: 110 },
-    { field: 'contract_name', headerName: 'Contract Name', flex: 1 },
-    { field: 'client_id', headerName: 'Client ID', flex: 1 },
-    { field: 'start_date', headerName: 'Start Date', width: 180 },
-    { field: 'end_date', headerName: 'End Date', width: 180 },
-    { field: 'is_archived', headerName: 'Archived', width: 120 },
+    { field: 'id', headerName: 'ID', flex: 2 },
+    { field: 'contract_name', headerName: 'Contract Name', flex: 2 },
+    { field: 'client_id', headerName: 'Client ID', flex: 2 },
+    { field: 'start_date', headerName: 'Start Date', flex: 1 },
+    { field: 'end_date', headerName: 'End Date', flex: 1 },
+    
   ];
 
   return (
