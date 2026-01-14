@@ -1,35 +1,74 @@
+import { useState, useCallback } from 'react';
 import AgGridTable from '../components/AgGridTable';
+import ClientModal from '../components/modals/ClientModal';
 import { clientService } from '../services';
 
 export default function ClientsPage() {
-  const fetchClients = async () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedClient, setSelectedClient] = useState(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const fetchClients = useCallback(async () => {
     const res = await clientService.listClients();
     return (res?.data?.data?.clients) || [];
+  }, [refreshTrigger]);
+
+  const handleAddClick = () => {
+    setSelectedClient(null);
+    setIsModalOpen(true);
+  };
+
+  const handleRowClick = (event) => {
+    setSelectedClient(event.data);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedClient(null);
+  };
+
+  const handleSuccess = () => {
+    setRefreshTrigger((prev) => prev + 1);
   };
 
   const clientCols = [
-    { field: 'id', headerName: 'ID', flex: 2 },
     { field: 'company_name', headerName: 'Company', flex: 2 },
     { field: 'email', headerName: 'Email', flex: 1 },
-    { field: 'phone_number', headerName: 'Phone', width: 1 },
+    { field: 'phone_number', headerName: 'Phone', width: 150 },
     { field: 'address', headerName: 'Address', flex: 3 },
-    
   ];
 
   return (
     <div className="mt-4 text-left">
-      <div>
-        <h1 className="text-xl font-medium text-gray-900">Clients</h1>
-        <p>Clients Page. Use table below to manage Clients.</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-xl font-medium text-gray-900">Clients</h1>
+          <p className="text-gray-500 text-sm">Manage your client registry.</p>
+        </div>
+        <button
+          onClick={handleAddClick}
+          className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+          Add Client
+        </button>
       </div>
 
       <div className="mt-6 w-full">
         <AgGridTable
           fetcher={fetchClients}
           colDefs={clientCols}
-          gridHeight="400px"
+          gridHeight="500px"
+          onRowClicked={handleRowClick}
         />
       </div>
+
+      <ClientModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        client={selectedClient}
+        onSuccess={handleSuccess}
+      />
     </div>
   );
 }
