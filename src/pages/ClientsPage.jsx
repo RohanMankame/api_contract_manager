@@ -18,20 +18,20 @@ export default function ClientsPage() {
   ];
 
     return (
-      <div className="min-h-screen bg-gray-50 pl-6">
-        <TopNavbar />
-        <Sidebar />
-  
-        <div className="mt-16 text-left ">
-          <div>
-            <h1 className="text-xl font-medium text-gray-900">Clients</h1>
-            <p>Client Page. Use table below to manage clients.</p>
+          <div className="min-h-screen bg-gray-50 pl-6">
+            <TopNavbar />
+            <Sidebar />
+      
+            <div className="mt-16 text-left ">
+              <div>
+                <h1 className="text-xl font-medium text-gray-900">Clients</h1>
+                <p>Clients Page. Use table below to manage Clients.</p>
+              </div>
+      
+              <div className="mt-6 w-full">
+                <AgGridTable fetcher={fetchClients} colDefs={clientCols} gridHeight="400px" />
+              </div>
+            </div>
           </div>
-  
-          <div className="mt-6 w-full">
-            <AgGridTable fetcher={fetchClients} colDefs={clientCols} gridHeight="600px" />
-          </div>
-        </div>
-      </div>
-    );
-  }
+        );
+      }   

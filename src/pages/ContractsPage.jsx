@@ -17,17 +17,21 @@ export default function ContractsPage() {
     { field: 'end_date', headerName: 'End Date', flex: 1 },
     
   ];
-
-  return (
-    <div className="min-h-screen bg-gray-50 pl-6">
-      <TopNavbar />
-      <Sidebar />
-      <div className="ml-20 mt-20 p-8">
-        <h1 className="text-3xl font-bold text-gray-900">Contracts</h1>
-        <div className="mt-6">
-          <AgGridTable fetcher={fetchContracts} colDefs={contractCols} />
+return (
+      <div className="min-h-screen bg-gray-50 pl-6">
+        <TopNavbar />
+        <Sidebar />
+  
+        <div className="mt-16 text-left ">
+          <div>
+            <h1 className="text-xl font-medium text-gray-900">Contracts</h1>
+            <p>Contracts Page. Use table below to manage Contracts.</p>
+          </div>
+  
+          <div className="mt-6 w-full">
+            <AgGridTable fetcher={fetchContracts} colDefs={contractCols} gridHeight="400px" />
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  } 

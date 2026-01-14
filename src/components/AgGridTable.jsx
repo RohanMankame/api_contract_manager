@@ -14,9 +14,9 @@ const myTheme = themeQuartz.withParams({
 export default function AgGridTable({
   fetcher,
   colDefs: initialColDefs = [],
-  gridClassName = '', // do not use legacy ag-theme-* classes when using Theming API
+  gridClassName = '',
   gridHeight = '600px',
-  pageSize = 20,
+  pageSize = 5,
   onRowClicked,
 }) {
   const [rowData, setRowData] = useState([]);
