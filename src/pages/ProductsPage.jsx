@@ -17,8 +17,7 @@ export default function ProductsPage() {
 
     return (
       <div className="min-h-screen bg-gray-50 ">
-        <TopNavbar />
-        <Sidebar />
+
   
 
         <div className="mt-16 text-left ">

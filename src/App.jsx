@@ -4,6 +4,7 @@ import DashboardPage from './pages/DashboardPage';
 import ClientsPage from './pages/ClientsPage';
 import ProductsPage from './pages/ProductsPage';
 import ContractsPage from './pages/ContractsPage';
+import MainLayout from './layouts/MainLayout';
 import './App.css';
 
 function PrivateRoute({ children }) {
@@ -15,12 +16,17 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Public route: no layout, no sidebar */}
         <Route path="/login" element={<LoginPage />} />
+
+        {/* All protected routes share MainLayout */}
         <Route
           path="/dashboard"
           element={
             <PrivateRoute>
-              <DashboardPage />
+              <MainLayout>
+                <DashboardPage />
+              </MainLayout>
             </PrivateRoute>
           }
         />
@@ -28,7 +34,9 @@ function App() {
           path="/clients"
           element={
             <PrivateRoute>
-              <ClientsPage />
+              <MainLayout>
+                <ClientsPage />
+              </MainLayout>
             </PrivateRoute>
           }
         />
@@ -36,7 +44,9 @@ function App() {
           path="/products"
           element={
             <PrivateRoute>
-              <ProductsPage />
+              <MainLayout>
+                <ProductsPage />
+              </MainLayout>
             </PrivateRoute>
           }
         />
@@ -44,11 +54,18 @@ function App() {
           path="/contracts"
           element={
             <PrivateRoute>
-              <ContractsPage />
+              <MainLayout>
+                <ContractsPage />
+              </MainLayout>
             </PrivateRoute>
           }
         />
-        <Route path="/" element={<Navigate to="/dashboard" />} />
+
+        {/* Default redirect into a protected+layout route */}
+        <Route
+          path="/"
+          element={<Navigate to="/dashboard" />}
+        />
       </Routes>
     </Router>
   );

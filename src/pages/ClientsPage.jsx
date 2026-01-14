@@ -1,4 +1,3 @@
-import { TopNavbar, Sidebar } from '../components/nav';
 import AgGridTable from '../components/AgGridTable';
 import { clientService } from '../services';
 
@@ -17,21 +16,20 @@ export default function ClientsPage() {
     
   ];
 
-    return (
-          <div className="min-h-screen bg-gray-50 pl-6">
-            <TopNavbar />
-            <Sidebar />
-      
-            <div className="mt-16 text-left ">
-              <div>
-                <h1 className="text-xl font-medium text-gray-900">Clients</h1>
-                <p>Clients Page. Use table below to manage Clients.</p>
-              </div>
-      
-              <div className="mt-6 w-full">
-                <AgGridTable fetcher={fetchClients} colDefs={clientCols} gridHeight="400px" />
-              </div>
-            </div>
-          </div>
-        );
-      }   
+  return (
+    <div className="mt-4 text-left">
+      <div>
+        <h1 className="text-xl font-medium text-gray-900">Clients</h1>
+        <p>Clients Page. Use table below to manage Clients.</p>
+      </div>
+
+      <div className="mt-6 w-full">
+        <AgGridTable
+          fetcher={fetchClients}
+          colDefs={clientCols}
+          gridHeight="400px"
+        />
+      </div>
+    </div>
+  );
+}

@@ -1,11 +1,9 @@
-import { TopNavbar, Sidebar } from '../components/nav';
 import AgGridTable from '../components/AgGridTable';
 import { contractService } from '../services';
 
 export default function ContractsPage() {
   const fetchContracts = async () => {
     const res = await contractService.listContracts();
-    // Envelope { data: { contracts: [...] } }
     return (res?.data?.data?.contracts) || [];
   };
 
@@ -17,21 +15,21 @@ export default function ContractsPage() {
     { field: 'end_date', headerName: 'End Date', flex: 1 },
     
   ];
-return (
-      <div className="min-h-screen bg-gray-50 pl-6">
-        <TopNavbar />
-        <Sidebar />
-  
-        <div className="mt-16 text-left ">
+    return (
+        <div className="mt-4 text-left">
           <div>
             <h1 className="text-xl font-medium text-gray-900">Contracts</h1>
             <p>Contracts Page. Use table below to manage Contracts.</p>
           </div>
-  
+
           <div className="mt-6 w-full">
-            <AgGridTable fetcher={fetchContracts} colDefs={contractCols} gridHeight="400px" />
+            <AgGridTable
+              fetcher={fetchContracts}
+              colDefs={contractCols}
+              gridHeight="400px"
+            />
           </div>
         </div>
-      </div>
     );
+
   } 
