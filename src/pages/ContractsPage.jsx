@@ -1,10 +1,14 @@
 import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AgGridTable from '../components/AgGridTable';
 import ContractModal from '../components/modals/ContractModal';
+import ActionModal from '../components/modals/ActionModal';
 import { contractService } from '../services';
 
 export default function ContractsPage() {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
   const [selectedContract, setSelectedContract] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
@@ -20,7 +24,23 @@ export default function ContractsPage() {
 
   const handleRowClick = (event) => {
     setSelectedContract(event.data);
+    setIsActionModalOpen(true);
+  };
+
+  const handleActionViewDetails = () => {
+    if (selectedContract) {
+      navigate(`/contracts/${selectedContract.id || selectedContract.contract_id}`);
+    }
+  };
+
+  const handleActionQuickEdit = () => {
+    setIsActionModalOpen(false);
     setIsModalOpen(true);
+  };
+
+  const handleActionClose = () => {
+    setIsActionModalOpen(false);
+    setSelectedContract(null);
   };
 
   const handleModalClose = () => {
@@ -68,6 +88,15 @@ export default function ContractsPage() {
         onClose={handleModalClose}
         contract={selectedContract}
         onSuccess={handleSuccess}
+      />
+
+      <ActionModal
+        isOpen={isActionModalOpen}
+        onClose={handleActionClose}
+        title="Contract Actions"
+        entityData={selectedContract ? { name: selectedContract.contract_name, id: selectedContract.id || selectedContract.contract_id } : null}
+        onViewDetails={handleActionViewDetails}
+        onQuickEdit={handleActionQuickEdit}
       />
     </div>
   );

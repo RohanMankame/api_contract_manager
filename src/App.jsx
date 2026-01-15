@@ -4,6 +4,7 @@ import DashboardPage from './pages/DashboardPage';
 import ClientsPage from './pages/ClientsPage';
 import ProductsPage from './pages/ProductsPage';
 import ContractsPage from './pages/ContractsPage';
+import ContractDetailsPage from './pages/ContractDetailsPage';
 import SettingsPage from './pages/SettingsPage';
 import MainLayout from './layouts/MainLayout';
 import './App.css';
@@ -57,6 +58,16 @@ function App() {
             <PrivateRoute>
               <MainLayout>
                 <ContractsPage />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/contracts/:id"
+          element={
+            <PrivateRoute>
+              <MainLayout>
+                <ContractDetailsPage />
               </MainLayout>
             </PrivateRoute>
           }
