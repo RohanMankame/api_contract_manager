@@ -16,7 +16,7 @@ export default function MainLayout({ children }) {
         style={{ marginLeft: COLLAPSED_SIDEBAR_WIDTH }}
       >
         {/* This centers your "page" in the remaining space */}
-        <div className="w-full px-8">
+        <div className="w-full px-6">
           {children}
         </div>
       </main>

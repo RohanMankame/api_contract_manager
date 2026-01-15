@@ -44,14 +44,8 @@ export default function ClientsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-medium text-gray-900">Clients</h1>
-          <p className="text-gray-500 text-sm">Manage your client registry.</p>
+          <p className="text-gray-500 text-sm">Manage your clients.</p>
         </div>
-        <button
-          onClick={handleAddClick}
-          className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        >
-          Add Client
-        </button>
       </div>
 
       <div className="mt-6 w-full">
@@ -60,6 +54,14 @@ export default function ClientsPage() {
           colDefs={clientCols}
           gridHeight="500px"
           onRowClicked={handleRowClick}
+          headerActions={
+            <button
+              onClick={handleAddClick}
+              className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              Add Client
+            </button>
+          }
         />
       </div>
 
