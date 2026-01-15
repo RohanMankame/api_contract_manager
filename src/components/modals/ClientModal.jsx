@@ -15,6 +15,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
     useEffect(() => {
         if (isOpen) {
             setError(null);
+            // if editing existing client, populate form
             if (client) {
                 setFormData({
                     company_name: client.company_name || '',
@@ -22,7 +23,9 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
                     phone_number: client.phone_number || '',
                     address: client.address || '',
                 });
-            } else {
+            } 
+            // else adding a new client, reset form
+            else {
                 setFormData({
                     company_name: '',
                     email: '',
@@ -38,6 +41,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
+    // Handle form submission for create/update
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -58,6 +62,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
         }
     };
 
+    // Handle client deletion
     const handleDelete = async () => {
         if (!window.confirm('Are you sure you want to delete this client? This action cannot be undone.')) {
             return;
