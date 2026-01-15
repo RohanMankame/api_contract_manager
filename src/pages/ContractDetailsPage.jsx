@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ContractInfoCard from '../components/infocards/ContractInfoCard';
 import ContractModal from '../components/modals/ContractModal';
-import { contractService } from '../services';
+import SubscriptionList from '../components/lists/SubscriptionList';
+import { contractService, rateCardService } from '../services';
 
 export default function ContractDetailsPage() {
     const { id } = useParams();
@@ -13,13 +14,49 @@ export default function ContractDetailsPage() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [refreshTrigger, setRefreshTrigger] = useState(0);
 
+    // Helper to build the hierarchy properly since API might be flat or missing deep nesting
+    const fetchFullContractDetails = async (contractId) => {
+        // 1. Fetch Contract (has basic subs info potentially)
+        const contractRes = await contractService.getContractById(contractId);
+        let contractData = contractRes.data?.data?.contract || contractRes.data?.data || contractRes.data;
+
+        // 2. Fetch Subscriptions explicitly to be sure (or use what's in contractData if robust)
+        // API doc says GET /contracts/{id}/subscriptions exists.
+        const subsRes = await contractService.getContractSubscriptions(contractId);
+        const subscriptions = subsRes.data?.data?.subscriptions || [];
+
+        // 3. For each subscription, fetch Rate Cards?
+        // User said "subscriptions hold ratecards".
+        // API doesn't have "get rate cards for subscription". It has listRateCards.
+        // We might have to fetch listRateCards and filter. 
+        // OR check if subscription object already has it?
+        // Let's assume we need to fetch all rate cards and match them.
+        // Optimization: If API supported filter, we'd use it. For now, fetch all (warning: scaling issue).
+        // Better: Fetch rate cards for each subscription if a specific endpoint existed.
+        // Alternate: Maybe the subscription object in `subscriptions` array DOES have it?
+        // Let's try to map rate cards to subscriptions.
+
+        const rateCardsRes = await rateCardService.listRateCards();
+        const allRateCards = rateCardsRes.data?.data?.rate_cards || [];
+
+        const enrichedSubscriptions = subscriptions.map(sub => {
+            // Find rate cards for this sub
+            const subRateCards = allRateCards.filter(rc => rc.subscription_id === sub.id || rc.subscription_id === sub.subscription_id);
+            return {
+                ...sub,
+                rate_cards: subRateCards // Nest them
+            };
+        });
+
+        contractData.subscriptions = enrichedSubscriptions;
+        return contractData;
+    };
+
     useEffect(() => {
         const fetchContract = async () => {
             try {
                 setLoading(true);
-                const response = await contractService.getContractById(id);
-
-                const data = response.data?.data?.contract || response.data?.data || response.data;
+                const data = await fetchFullContractDetails(id);
                 setContract(data);
                 setError(null);
             } catch (err) {
@@ -76,17 +113,11 @@ export default function ContractDetailsPage() {
                 onEdit={() => setIsEditModalOpen(true)}
             />
 
-            <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-                <div className="px-4 py-5 sm:px-6">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">More</h3>
-                    <p className="mt-1 max-w-2xl text-sm text-gray-500">information.</p>
-                </div>
-                <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <div className="py-5 px-6 text-sm text-gray-500">
-                        Placeholder.
-                    </div>
-                </div>
-            </div>
+            <SubscriptionList
+                subscriptions={contract?.subscriptions || []}
+                contractId={id}
+                onRefresh={handleEditSuccess}
+            />
 
             <ContractModal
                 isOpen={isEditModalOpen}
