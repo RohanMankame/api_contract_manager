@@ -1,10 +1,14 @@
 import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AgGridTable from '../components/AgGridTable';
 import ProductModal from '../components/modals/ProductModal';
+import ActionModal from '../components/modals/ActionModal';
 import { productService } from '../services';
 
 export default function ProductsPage() {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
@@ -21,7 +25,23 @@ export default function ProductsPage() {
 
   const handleRowClick = (event) => {
     setSelectedProduct(event.data);
+    setIsActionModalOpen(true);
+  };
+
+  const handleActionViewDetails = () => {
+    if (selectedProduct) {
+      navigate(`/products/${selectedProduct.id || selectedProduct.product_id}`);
+    }
+  };
+
+  const handleActionQuickEdit = () => {
+    setIsActionModalOpen(false);
     setIsModalOpen(true);
+  };
+
+  const handleActionClose = () => {
+    setIsActionModalOpen(false);
+    setSelectedProduct(null);
   };
 
   const handleModalClose = () => {
@@ -69,6 +89,15 @@ export default function ProductsPage() {
         onClose={handleModalClose}
         product={selectedProduct}
         onSuccess={handleSuccess}
+      />
+
+      <ActionModal
+        isOpen={isActionModalOpen}
+        onClose={handleActionClose}
+        title="Product Actions"
+        entityData={selectedProduct ? { name: selectedProduct.api_name, id: selectedProduct.id || selectedProduct.product_id } : null}
+        onViewDetails={handleActionViewDetails}
+        onQuickEdit={handleActionQuickEdit}
       />
     </div>
   );

@@ -1,10 +1,14 @@
 import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AgGridTable from '../components/AgGridTable';
 import ClientModal from '../components/modals/ClientModal';
+import ActionModal from '../components/modals/ActionModal';
 import { clientService } from '../services';
 
 export default function ClientsPage() {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
@@ -20,7 +24,23 @@ export default function ClientsPage() {
 
   const handleRowClick = (event) => {
     setSelectedClient(event.data);
+    setIsActionModalOpen(true);
+  };
+
+  const handleActionViewDetails = () => {
+    if (selectedClient) {
+      navigate(`/clients/${selectedClient.id || selectedClient.client_id}`);
+    }
+  };
+
+  const handleActionQuickEdit = () => {
+    setIsActionModalOpen(false);
     setIsModalOpen(true);
+  };
+
+  const handleActionClose = () => {
+    setIsActionModalOpen(false);
+    setSelectedClient(null);
   };
 
   const handleModalClose = () => {
@@ -70,6 +90,15 @@ export default function ClientsPage() {
         onClose={handleModalClose}
         client={selectedClient}
         onSuccess={handleSuccess}
+      />
+
+      <ActionModal
+        isOpen={isActionModalOpen}
+        onClose={handleActionClose}
+        title="Client Actions"
+        entityData={selectedClient ? { name: selectedClient.company_name, id: selectedClient.id || selectedClient.client_id } : null}
+        onViewDetails={handleActionViewDetails}
+        onQuickEdit={handleActionQuickEdit}
       />
     </div>
   );

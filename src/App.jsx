@@ -5,6 +5,8 @@ import ClientsPage from './pages/ClientsPage';
 import ProductsPage from './pages/ProductsPage';
 import ContractsPage from './pages/ContractsPage';
 import ContractDetailsPage from './pages/ContractDetailsPage';
+import ClientDetailsPage from './pages/ClientDetailsPage';
+import ProductDetailsPage from './pages/ProductDetailsPage';
 import SettingsPage from './pages/SettingsPage';
 import MainLayout from './layouts/MainLayout';
 import './App.css';
@@ -48,6 +50,26 @@ function App() {
             <PrivateRoute>
               <MainLayout>
                 <ProductsPage />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/clients/:id"
+          element={
+            <PrivateRoute>
+              <MainLayout>
+                <ClientDetailsPage />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/products/:id"
+          element={
+            <PrivateRoute>
+              <MainLayout>
+                <ProductDetailsPage />
               </MainLayout>
             </PrivateRoute>
           }

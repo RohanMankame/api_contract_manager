@@ -1,37 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import ContractInfoCard from '../components/infocards/ContractInfoCard';
-import ContractModal from '../components/modals/ContractModal';
-import { contractService } from '../services';
+import ClientInfoCard from '../components/infocards/ClientInfoCard';
+import ClientModal from '../components/modals/ClientModal';
+import { clientService } from '../services';
 
-export default function ContractDetailsPage() {
+export default function ClientDetailsPage() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [contract, setContract] = useState(null);
+    const [client, setClient] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     useEffect(() => {
-        const fetchContract = async () => {
+        const fetchClient = async () => {
             try {
                 setLoading(true);
-                const response = await contractService.getContractById(id);
-
-                const data = response.data?.data?.contract || response.data?.data || response.data;
-                setContract(data);
+                const response = await clientService.getClientById(id);
+                // Similar to contracts, handle potential data structures
+                const data = response.data?.data?.client || response.data?.data || response.data;
+                setClient(data);
                 setError(null);
             } catch (err) {
-                console.error("Failed to fetch contract", err);
-                setError("Failed to load contract details.");
+                console.error("Failed to fetch client", err);
+                setError("Failed to load client details.");
             } finally {
                 setLoading(false);
             }
         };
 
         if (id) {
-            fetchContract();
+            fetchClient();
         }
     }, [id, refreshTrigger]);
 
@@ -51,7 +51,7 @@ export default function ContractDetailsPage() {
         return (
             <div className="mt-8 text-center text-red-600">
                 {error}
-                <button onClick={() => navigate('/contracts')} className="ml-2 text-indigo-600 hover:text-indigo-500 underline">Go back</button>
+                <button onClick={() => navigate('/clients')} className="ml-2 text-indigo-600 hover:text-indigo-500 underline">Go back</button>
             </div>
         );
     }
@@ -60,22 +60,23 @@ export default function ContractDetailsPage() {
         <div className="mt-4 text-left space-y-6">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-xl font-medium text-gray-900">Contract Details</h1>
-                    <p className="text-gray-500 text-sm">Viewing details for contract ID: {id}</p>
+                    <h1 className="text-xl font-medium text-gray-900">Client Details</h1>
+                    <p className="text-gray-500 text-sm">Viewing details for client ID: {id}</p>
                 </div>
                 <button
-                    onClick={() => navigate('/contracts')}
+                    onClick={() => navigate('/clients')}
                     className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Back to Contracts
+                    Back to Clients
                 </button>
             </div>
 
-            <ContractInfoCard
-                contract={contract}
+            <ClientInfoCard
+                client={client}
                 onEdit={() => setIsEditModalOpen(true)}
             />
 
+            {/* Placeholder for related lists e.g. Contracts for this client */}
             <div className="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div className="px-4 py-5 sm:px-6">
                     <h3 className="text-lg leading-6 font-medium text-gray-900">More</h3>
@@ -88,10 +89,10 @@ export default function ContractDetailsPage() {
                 </div>
             </div>
 
-            <ContractModal
+            <ClientModal
                 isOpen={isEditModalOpen}
                 onClose={() => setIsEditModalOpen(false)}
-                contract={contract}
+                client={client}
                 onSuccess={handleEditSuccess}
             />
         </div>
