@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export default function ModalWrapper({ isOpen, onClose, title, children }) {
+export default function ModalWrapper({ isOpen, onClose, title, children, maxWidth = "max-w-lg" }) {
     // Prevent body scroll when modal is open
     useEffect(() => {
         if (isOpen) {
@@ -25,7 +25,7 @@ export default function ModalWrapper({ isOpen, onClose, title, children }) {
             />
 
             {/* Modal Content */}
-            <div className="relative w-full max-w-lg transform overflow-hidden rounded-lg bg-white p-6 shadow-xl transition-all">
+            <div className={`relative w-full ${maxWidth} transform overflow-hidden rounded-lg bg-white p-6 shadow-xl transition-all`}>
                 <div className="flex items-center justify-between mb-6">
                     <h3 className="text-lg font-semibold text-gray-900">
                         {title}
