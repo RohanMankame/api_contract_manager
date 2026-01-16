@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services';
+import { useUser } from '../context/UserContext';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { refreshUser } = useUser();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -12,7 +14,7 @@ export default function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     if (!email || !password) {
       setError('Please enter both email and password');
       return;
@@ -21,24 +23,25 @@ export default function LoginPage() {
     try {
       setLoading(true);
       const response = await authService.login(email, password);
-      
-      console.log('Login response:', response); // Debug log
-      
+
+
+
       if (response.data.success && response.data.data.token) {
         localStorage.setItem('authToken', response.data.data.token);
+        await refreshUser();
         navigate('/dashboard');
       } else {
         setError(response.data.message || 'Login failed');
       }
     } catch (err) {
-      
+
       // err.response?.data?.message is the correct error message
-      const errorMsg = 
-        err.response?.data?.message || 
-        err.response?.data?.error || 
-        err.message || 
+      const errorMsg =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
         'Error occoured';
-      
+
       setError(errorMsg);
     } finally {
       setLoading(false);

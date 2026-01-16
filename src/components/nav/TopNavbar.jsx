@@ -1,27 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authService } from '../../services';
+import { useUser } from '../../context/UserContext';
 
 export default function TopNavbar() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const { user } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
-
-  useEffect(() => {
-    // Fetch user info
-    const fetchUser = async () => {
-      try {
-        const res = await authService.getProtected();
-        if (res.data?.data?.user) {
-          setUser(res.data.data.user);
-        }
-      } catch (err) {
-        console.error('Failed to fetch user', err);
-      }
-    };
-    fetchUser();
-  }, []);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -51,9 +36,7 @@ export default function TopNavbar() {
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-50 focus:outline-none transition-colors"
         >
-          <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-semibold text-sm">
-            {user?.full_name?.charAt(0) || 'U'}
-          </div>
+
           <span className="text-sm font-medium text-gray-700 hidden sm:block">
             {user?.full_name || 'User'}
           </span>

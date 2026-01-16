@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { UserProvider } from './context/UserContext';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import ClientsPage from './pages/ClientsPage';
@@ -18,100 +19,102 @@ function PrivateRoute({ children }) {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Public route: no layout, no sidebar */}
-        <Route path="/login" element={<LoginPage />} />
+    <UserProvider>
+      <Router>
+        <Routes>
+          {/* Public route: no layout, no sidebar */}
+          <Route path="/login" element={<LoginPage />} />
 
-        {/* All protected routes share MainLayout */}
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <MainLayout>
-                <DashboardPage />
-              </MainLayout>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/clients"
-          element={
-            <PrivateRoute>
-              <MainLayout>
-                <ClientsPage />
-              </MainLayout>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            <PrivateRoute>
-              <MainLayout>
-                <ProductsPage />
-              </MainLayout>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/clients/:id"
-          element={
-            <PrivateRoute>
-              <MainLayout>
-                <ClientDetailsPage />
-              </MainLayout>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/products/:id"
-          element={
-            <PrivateRoute>
-              <MainLayout>
-                <ProductDetailsPage />
-              </MainLayout>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/contracts"
-          element={
-            <PrivateRoute>
-              <MainLayout>
-                <ContractsPage />
-              </MainLayout>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/contracts/:id"
-          element={
-            <PrivateRoute>
-              <MainLayout>
-                <ContractDetailsPage />
-              </MainLayout>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <PrivateRoute>
-              <MainLayout>
-                <SettingsPage />
-              </MainLayout>
-            </PrivateRoute>
-          }
-        />
+          {/* All protected routes share MainLayout */}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <DashboardPage />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/clients"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <ClientsPage />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/products"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <ProductsPage />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/clients/:id"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <ClientDetailsPage />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/products/:id"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <ProductDetailsPage />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/contracts"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <ContractsPage />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/contracts/:id"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <ContractDetailsPage />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <SettingsPage />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
 
-        {/* Default redirect into a protected+layout route */}
-        <Route
-          path="/"
-          element={<Navigate to="/dashboard" />}
-        />
-      </Routes>
-    </Router>
+          {/* Default redirect into a protected+layout route */}
+          <Route
+            path="/"
+            element={<Navigate to="/dashboard" />}
+          />
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 }
 
