@@ -1,4 +1,6 @@
 import React from 'react';
+import TierModal from '../modals/TierModal';
+import { PlusIcon } from '../icons';
 
 export default function TierList({ tiers }) {
     if (!tiers || tiers.length === 0) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TierList from './TierList';
 import RateCardModal from '../modals/RateCardModal';
 import TierModal from '../modals/TierModal';
-import { ChevronIcon, EditIcon } from '../icons';
+import { ChevronIcon, EditIcon, PlusIcon } from '../icons';
 
 function RateCardItem({ rateCard, onRefresh }) {
     const [isEditOpen, setIsEditOpen] = useState(false);
@@ -84,9 +84,10 @@ export default function RateCardList({ subscriptionId, initialRateCards, onRefre
                 <h4 className="text-sm font-medium text-gray-900">Rate Cards</h4>
                 <button
                     onClick={() => setIsAddOpen(true)}
-                    className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Add Rate Card
+                    <PlusIcon className="-ml-0.5 mr-2 h-4 w-4 text-gray-500" />
+                    Rate Card
                 </button>
             </div>
 
