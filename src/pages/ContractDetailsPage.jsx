@@ -4,6 +4,7 @@ import ContractInfoCard from '../components/infocards/ContractInfoCard';
 import ContractModal from '../components/modals/ContractModal';
 import SubscriptionList from '../components/lists/SubscriptionList';
 import { contractService, rateCardService, clientService } from '../services';
+import { generateContractDocument } from '../utils/contractExport';
 
 export default function ContractDetailsPage() {
     const { id } = useParams();
@@ -80,6 +81,15 @@ export default function ContractDetailsPage() {
         setRefreshTrigger(prev => prev + 1);
     };
 
+    const handleDownloadContract = async () => {
+        try {
+            await generateContractDocument(contract);
+        } catch (err) {
+            console.error('Failed to generate contract document:', err);
+            alert('Failed to download contract. Please try again.');
+        }
+    };
+
     if (loading) {
         return (
             <div className="mt-8 flex justify-center">
@@ -99,17 +109,31 @@ export default function ContractDetailsPage() {
 
     return (
         <div className="mt-4 text-left space-y-6">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-xl font-medium text-gray-900">Contract Details</h1>
-                    <p className="text-gray-500 text-sm">Viewing details for contract ID: {id}</p>
-                </div>
+            <div>
                 <button
                     onClick={() => navigate('/contracts')}
-                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 mb-2 focus:outline-none"
                 >
+                    <svg className="mr-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                    </svg>
                     Back to Contracts
                 </button>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-xl font-medium text-gray-900">Contract Details</h1>
+                        <p className="text-gray-500 text-sm">Viewing details for contract ID: {id}</p>
+                    </div>
+                    <button
+                        onClick={handleDownloadContract}
+                        className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                        <svg className="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                        Download Contract
+                    </button>
+                </div>
             </div>
 
             <ContractInfoCard
