@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AgGridTable from '../components/AgGridTable';
 import ContractModal from '../components/modals/ContractModal';
 import ActionModal from '../components/modals/ActionModal';
-import { contractService } from '../services';
+import { contractService, clientService } from '../services';
 import { PlusIcon } from '../components/icons';
 
 export default function ContractsPage() {
@@ -14,8 +14,36 @@ export default function ContractsPage() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const fetchContracts = useCallback(async () => {
-    const res = await contractService.listContracts();
-    return (res?.data?.data?.contracts) || [];
+    const contractsRes = await contractService.listContracts();
+    const contracts = contractsRes?.data?.data?.contracts || [];
+
+    // Fetch client details for each contract individually
+    const contractsWithClients = await Promise.all(
+      contracts.map(async (contract) => {
+        if (contract.client_id) {
+          try {
+            const clientRes = await clientService.getClientById(contract.client_id);
+            const client = clientRes.data?.data?.client || clientRes.data?.data || clientRes.data;
+            return {
+              ...contract,
+              client_name: client.company_name || 'Unknown Client'
+            };
+          } catch (err) {
+            console.error(`Failed to fetch client ${contract.client_id}:`, err);
+            return {
+              ...contract,
+              client_name: 'Unknown Client'
+            };
+          }
+        }
+        return {
+          ...contract,
+          client_name: 'No Client'
+        };
+      })
+    );
+
+    return contractsWithClients;
   }, [refreshTrigger]);
 
   const handleAddClick = () => {
@@ -55,9 +83,9 @@ export default function ContractsPage() {
 
   const contractCols = [
     { field: 'contract_name', headerName: 'Contract Name', flex: 2 },
+    { field: 'client_name', headerName: 'Client Name', flex: 1.5 },
     { field: 'start_date', headerName: 'Start Date', flex: 1, valueFormatter: (params) => new Date(params.value).toLocaleDateString() },
     { field: 'end_date', headerName: 'End Date', flex: 1, valueFormatter: (params) => new Date(params.value).toLocaleDateString() },
-    { field: 'client_id', headerName: 'Client ID', flex: 1, hide: true }, // Hidden or displayed if needed
   ];
 
   return (

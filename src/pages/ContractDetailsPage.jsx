@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import ContractInfoCard from '../components/infocards/ContractInfoCard';
 import ContractModal from '../components/modals/ContractModal';
 import SubscriptionList from '../components/lists/SubscriptionList';
-import { contractService, rateCardService } from '../services';
+import { contractService, rateCardService, clientService } from '../services';
 
 export default function ContractDetailsPage() {
     const { id } = useParams();
@@ -38,6 +38,19 @@ export default function ContractDetailsPage() {
         });
 
         contractData.subscriptions = enrichedSubscriptions;
+
+        // Fetch client details for name
+        if (contractData.client_id) {
+            try {
+                const clientRes = await clientService.getClientById(contractData.client_id);
+                const client = clientRes.data?.data?.client || clientRes.data?.data || clientRes.data;
+                contractData.client_name = client.company_name || 'Unknown Client';
+            } catch (err) {
+                console.error('Failed to fetch client details', err);
+                contractData.client_name = 'Unknown Client';
+            }
+        }
+
         return contractData;
     };
 

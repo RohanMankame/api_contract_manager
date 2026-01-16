@@ -3,7 +3,7 @@ import React from 'react';
 export default function ContractInfoCard({ contract, onEdit }) {
     if (!contract) return null;
 
-    const { contract_name, id, contract_id, start_date, end_date, is_archived } = contract;
+    const { contract_name, id, contract_id, start_date, end_date, is_archived, created_at, updated_at } = contract;
     const displayId = id || contract_id;
     const status = is_archived ? 'Archived' : 'Active';
     const statusColor = is_archived ? 'bg-gray-100 text-gray-800' : 'bg-green-100 text-green-800';
@@ -35,12 +35,28 @@ export default function ContractInfoCard({ contract, onEdit }) {
             <div className="px-6 py-5">
                 <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                     <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Client Name</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{contract.client_name || 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Client ID</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{contract.client_id || 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">Start Date</dt>
                         <dd className="mt-1 text-sm text-gray-900 font-medium">{start_date ? new Date(start_date).toLocaleDateString() : 'N/A'}</dd>
                     </div>
                     <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">End Date</dt>
                         <dd className="mt-1 text-sm text-gray-900 font-medium">{end_date ? new Date(end_date).toLocaleDateString() : 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Created At</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{created_at ? new Date(created_at).toLocaleString() : 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Updated At</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{updated_at ? new Date(updated_at).toLocaleString() : 'N/A'}</dd>
                     </div>
 
                 </dl>
