@@ -4,9 +4,9 @@ import RateCardModal from '../modals/RateCardModal';
 import TierModal from '../modals/TierModal';
 import { ChevronIcon, EditIcon, PlusIcon, SettingsIcon } from '../icons';
 
-function RateCardItem({ rateCard, onRefresh }) {
+
+function RateCardItem({ rateCard, onRefresh, onManageTiers }) {
     const [isEditOpen, setIsEditOpen] = useState(false);
-    const [isTierModalOpen, setIsTierModalOpen] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
@@ -37,7 +37,7 @@ function RateCardItem({ rateCard, onRefresh }) {
                     </button>
                     {/* Manage Tiers (Bulk Add/Edit) */}
                     <button
-                        onClick={(e) => { e.stopPropagation(); setIsTierModalOpen(true); }}
+                        onClick={(e) => { e.stopPropagation(); onManageTiers(rateCard); }}
                         className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                         <SettingsIcon className="-ml-0.5 mr-2 h-5 w-5 text-gray-500" />
@@ -59,14 +59,6 @@ function RateCardItem({ rateCard, onRefresh }) {
                 onSuccess={onRefresh}
                 initialData={rateCard}
             />
-
-            <TierModal
-                isOpen={isTierModalOpen}
-                onClose={() => setIsTierModalOpen(false)}
-                rateCardId={rateCard.id}
-                initialData={rateCard.tiers || []} // Pass existing tiers for bulk edit
-                onSuccess={onRefresh}
-            />
         </div>
     );
 }
@@ -75,9 +67,31 @@ export default function RateCardList({ subscriptionId, initialRateCards, onRefre
     const [isAddOpen, setIsAddOpen] = useState(false);
     const [rateCards, setRateCards] = useState(initialRateCards || []);
 
+
+    const [tierModalConfig, setTierModalConfig] = useState({ isOpen: false, rateCardId: null, tiers: [] });
+
     useEffect(() => {
         setRateCards(initialRateCards || []);
     }, [initialRateCards]);
+
+    const handleRateCardSuccess = (newRateCardId) => {
+        onRefresh();
+        if (newRateCardId) {
+            setTierModalConfig({
+                isOpen: true,
+                rateCardId: newRateCardId,
+                tiers: []
+            });
+        }
+    };
+
+    const openManageTiers = (rateCard) => {
+        setTierModalConfig({
+            isOpen: true,
+            rateCardId: rateCard.id,
+            tiers: rateCard.tiers || []
+        });
+    };
 
     return (
         <div className="mt-4">
@@ -98,7 +112,12 @@ export default function RateCardList({ subscriptionId, initialRateCards, onRefre
                 </div>
             ) : (
                 rateCards.map(rc => (
-                    <RateCardItem key={rc.id} rateCard={rc} onRefresh={onRefresh} />
+                    <RateCardItem
+                        key={rc.id}
+                        rateCard={rc}
+                        onRefresh={onRefresh}
+                        onManageTiers={openManageTiers}
+                    />
                 ))
             )}
 
@@ -106,6 +125,14 @@ export default function RateCardList({ subscriptionId, initialRateCards, onRefre
                 isOpen={isAddOpen}
                 onClose={() => setIsAddOpen(false)}
                 subscriptionId={subscriptionId}
+                onSuccess={handleRateCardSuccess}
+            />
+
+            <TierModal
+                isOpen={tierModalConfig.isOpen}
+                onClose={() => setTierModalConfig({ ...tierModalConfig, isOpen: false })}
+                rateCardId={tierModalConfig.rateCardId}
+                initialData={tierModalConfig.tiers}
                 onSuccess={onRefresh}
             />
         </div>

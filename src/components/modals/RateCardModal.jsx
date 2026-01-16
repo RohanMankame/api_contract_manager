@@ -54,13 +54,18 @@ export default function RateCardModal({ isOpen, onClose, subscriptionId, onSucce
 
             if (isEdit) {
                 await rateCardService.updateRateCard(initialData.id, payload);
+                onSuccess();
             } else {
-                await rateCardService.createRateCard({
+                const res = await rateCardService.createRateCard({
                     subscription_id: subscriptionId,
                     ...payload
                 });
+                // Pass the new ID to the success callback
+                // Response structure: res.data.data.rate_card.id
+                const newId = res.data?.data?.rate_card?.id || res.data?.data?.id || res.data?.id;
+                console.log('RateCardModal: Created Rate Card ID:', newId);
+                onSuccess(newId);
             }
-            onSuccess();
             onClose();
         } catch (err) {
             console.error(err);

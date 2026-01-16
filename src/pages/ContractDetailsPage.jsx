@@ -14,27 +14,16 @@ export default function ContractDetailsPage() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-    // Helper to build the hierarchy properly since API might be flat or missing deep nesting
+
     const fetchFullContractDetails = async (contractId) => {
-        // 1. Fetch Contract (has basic subs info potentially)
+
         const contractRes = await contractService.getContractById(contractId);
         let contractData = contractRes.data?.data?.contract || contractRes.data?.data || contractRes.data;
 
-        // 2. Fetch Subscriptions explicitly to be sure (or use what's in contractData if robust)
-        // API doc says GET /contracts/{id}/subscriptions exists.
+
         const subsRes = await contractService.getContractSubscriptions(contractId);
         const subscriptions = subsRes.data?.data?.subscriptions || [];
 
-        // 3. For each subscription, fetch Rate Cards?
-        // User said "subscriptions hold ratecards".
-        // API doesn't have "get rate cards for subscription". It has listRateCards.
-        // We might have to fetch listRateCards and filter. 
-        // OR check if subscription object already has it?
-        // Let's assume we need to fetch all rate cards and match them.
-        // Optimization: If API supported filter, we'd use it. For now, fetch all (warning: scaling issue).
-        // Better: Fetch rate cards for each subscription if a specific endpoint existed.
-        // Alternate: Maybe the subscription object in `subscriptions` array DOES have it?
-        // Let's try to map rate cards to subscriptions.
 
         const rateCardsRes = await rateCardService.listRateCards();
         const allRateCards = rateCardsRes.data?.data?.rate_cards || [];
@@ -55,7 +44,9 @@ export default function ContractDetailsPage() {
     useEffect(() => {
         const fetchContract = async () => {
             try {
-                setLoading(true);
+                if (!contract) {
+                    setLoading(true);
+                }
                 const data = await fetchFullContractDetails(id);
                 setContract(data);
                 setError(null);
