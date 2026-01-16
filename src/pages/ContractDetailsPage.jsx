@@ -108,7 +108,7 @@ export default function ContractDetailsPage() {
     }
 
     return (
-        <div className="mt-4 text-left space-y-6">
+        <div className="mt-4 text-left space-y-6 pb-12">
             <div>
                 <button
                     onClick={() => navigate('/contracts')}
