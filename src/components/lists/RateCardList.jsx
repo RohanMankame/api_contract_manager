@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TierList from './TierList';
 import RateCardModal from '../modals/RateCardModal';
 import TierModal from '../modals/TierModal';
-import { ChevronIcon, EditIcon, PlusIcon } from '../icons';
+import { ChevronIcon, EditIcon, PlusIcon, SettingsIcon } from '../icons';
 
 function RateCardItem({ rateCard, onRefresh }) {
     const [isEditOpen, setIsEditOpen] = useState(false);
@@ -38,8 +38,9 @@ function RateCardItem({ rateCard, onRefresh }) {
                     {/* Manage Tiers (Bulk Add/Edit) */}
                     <button
                         onClick={(e) => { e.stopPropagation(); setIsTierModalOpen(true); }}
-                        className="text-xs text-blue-600 hover:text-blue-900 font-medium"
+                        className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
+                        <SettingsIcon className="-ml-0.5 mr-2 h-5 w-5 text-gray-500" />
                         Manage Tiers
                     </button>
                 </div>
