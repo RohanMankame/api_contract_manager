@@ -82,7 +82,11 @@ export default function AgGridTable({
     }
   }, [gridApi]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return (
+    <div className="flex justify-center items-center py-10">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+    </div>
+  );
   if (error) return <div className="text-red-600">Error loading data</div>;
 
   return (
