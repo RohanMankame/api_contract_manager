@@ -44,11 +44,11 @@ export default function ContractInfoCard({ contract, onEdit }) {
                     </div>
                     <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">Start Date</dt>
-                        <dd className="mt-1 text-sm text-gray-900 font-medium">{start_date ? new Date(start_date).toLocaleDateString() : 'N/A'}</dd>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{start_date ? new Date(start_date).toLocaleString() : 'N/A'}</dd>
                     </div>
                     <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">End Date</dt>
-                        <dd className="mt-1 text-sm text-gray-900 font-medium">{end_date ? new Date(end_date).toLocaleDateString() : 'N/A'}</dd>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{end_date ? new Date(end_date).toLocaleString() : 'N/A'}</dd>
                     </div>
                     <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">Created At</dt>
