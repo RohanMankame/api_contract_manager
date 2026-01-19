@@ -3,11 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import ClientInfoCard from '../components/infocards/ClientInfoCard';
 import ClientModal from '../components/modals/ClientModal';
 import { clientService, userService } from '../services';
+import { ContractsIcon, ArrowIcon } from '../components/icons';
 
 export default function ClientDetailsPage() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [client, setClient] = useState(null);
+    const [contracts, setContracts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -42,6 +44,15 @@ export default function ClientDetailsPage() {
                 }
 
                 setClient(data);
+
+                // Fetch client contracts
+                try {
+                    const contractsRes = await clientService.getClientContracts(id);
+                    setContracts(contractsRes.data?.data?.contracts || []);
+                } catch (err) {
+                    console.error("Failed to fetch client contracts", err);
+                }
+
                 setError(null);
             } catch (err) {
                 console.error("Failed to fetch client", err);
@@ -78,7 +89,7 @@ export default function ClientDetailsPage() {
     }
 
     return (
-        <div className="mt-4 text-left space-y-6">
+        <div className="mt-4 text-left space-y-6 pb-12">
 
             <button
                 onClick={() => navigate('/clients')}
@@ -103,17 +114,54 @@ export default function ClientDetailsPage() {
                 onEdit={() => setIsEditModalOpen(true)}
             />
 
-            {/* Placeholder for related lists e.g. Contracts for this client */}
-            <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-                <div className="px-4 py-5 sm:px-6">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">More</h3>
-                    <p className="mt-1 max-w-2xl text-sm text-gray-500">information.</p>
+            {/* Client Contracts Grid */}
+            <div className="space-y-4">
+                <div className="flex items-center justify-between px-1">
+                    <h3 className="text-lg font-medium text-gray-900">Contracts</h3>
+                    <p className="text-sm text-gray-500">{contracts.length} contracts</p>
                 </div>
-                <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <div className="py-5 px-6 text-sm text-gray-500">
-                        Placeholder.
+
+                {contracts.length > 0 ? (
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                        {contracts.map((contract) => (
+                            <div
+                                key={contract.id}
+                                onClick={() => navigate(`/contracts/${contract.id}`)}
+                                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-indigo-200 cursor-pointer"
+                            >
+                                <div className="space-y-4">
+                                    <div className="flex items-start gap-4">
+                                        <div className="p-2 rounded-lg bg-gray-50 text-gray-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors duration-300 flex items-center justify-center">
+                                            <ContractsIcon className="h-6 w-6" />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className="text-base font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 truncate">
+                                                {contract.contract_name || 'Unnamed Contract'}
+                                            </h4>
+                                            <p className="mt-1 text-sm font-medium text-gray-500 whitespace-nowrap">
+                                                {new Date(contract.start_date).toLocaleDateString()} - {new Date(contract.end_date).toLocaleDateString()}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mt-6 flex items-center justify-start">
+                                    <div className="text-indigo-500 transform -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                                        <ArrowIcon className="h-5 w-5" />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                </div>
+                ) : (
+                    <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50/50 p-12 text-center">
+                        <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <h4 className="mt-2 text-sm font-medium text-gray-900">No contracts found</h4>
+                        <p className="mt-1 text-sm text-gray-500">This client doesn't have any associated contracts yet.</p>
+                    </div>
+                )}
             </div>
 
             <ClientModal
