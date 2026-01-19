@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ClientInfoCard from '../components/infocards/ClientInfoCard';
 import ClientModal from '../components/modals/ClientModal';
-import { clientService } from '../services';
+import { clientService, userService } from '../services';
 
 export default function ClientDetailsPage() {
     const { id } = useParams();
@@ -20,6 +20,27 @@ export default function ClientDetailsPage() {
                 const response = await clientService.getClientById(id);
                 // Similar to contracts, handle potential data structures
                 const data = response.data?.data?.client || response.data?.data || response.data;
+
+                // Fetch user names for audit info
+                if (data.created_by) {
+                    try {
+                        const userRes = await userService.getUserById(data.created_by);
+                        const user = userRes.data?.data?.user || userRes.data?.data || userRes.data;
+                        data.created_by_name = user.full_name || user.username || 'N/A';
+                    } catch (err) {
+                        console.error('Failed to fetch creator details', err);
+                    }
+                }
+                if (data.updated_by) {
+                    try {
+                        const userRes = await userService.getUserById(data.updated_by);
+                        const user = userRes.data?.data?.user || userRes.data?.data || userRes.data;
+                        data.updated_by_name = user.full_name || user.username || 'N/A';
+                    } catch (err) {
+                        console.error('Failed to fetch updater details', err);
+                    }
+                }
+
                 setClient(data);
                 setError(null);
             } catch (err) {

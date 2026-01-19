@@ -3,7 +3,7 @@ import React from 'react';
 export default function ClientInfoCard({ client, onEdit }) {
     if (!client) return null;
 
-    const { company_name, email, phone_number, address, id, client_id } = client;
+    const { company_name, email, phone_number, address, id, client_id, created_at, updated_at, created_by_name, updated_by_name } = client;
     const displayId = id || client_id;
 
     return (
@@ -40,6 +40,22 @@ export default function ClientInfoCard({ client, onEdit }) {
                     <div className="sm:col-span-2">
                         <dt className="text-sm font-medium text-gray-500">Address</dt>
                         <dd className="mt-1 text-sm text-gray-900 font-medium">{address || 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Created At</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{created_at ? new Date(created_at).toLocaleString() : 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Created By</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{created_by_name || 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Updated At</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{updated_at ? new Date(updated_at).toLocaleString() : 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Updated By</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{updated_by_name || 'N/A'}</dd>
                     </div>
                 </dl>
             </div>

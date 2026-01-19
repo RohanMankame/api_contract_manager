@@ -3,7 +3,7 @@ import React from 'react';
 export default function ProductInfoCard({ product, onEdit }) {
     if (!product) return null;
 
-    const { api_name, description, id, product_id } = product;
+    const { api_name, description, id, product_id, created_at, updated_at, created_by_name, updated_by_name } = product;
     const displayId = id || product_id;
 
     return (
@@ -31,7 +31,23 @@ export default function ProductInfoCard({ product, onEdit }) {
                 <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                     <div className="sm:col-span-2">
                         <dt className="text-sm font-medium text-gray-500">Description</dt>
-                        <dd className="mt-1 text-sm text-gray-900 font-medium">{description || 'No description provided.'}</dd>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium whitespace-pre-wrap">{description || 'No description provided.'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Created At</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{created_at ? new Date(created_at).toLocaleString() : 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Created By</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{created_by_name || 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Updated At</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{updated_at ? new Date(updated_at).toLocaleString() : 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Updated By</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{updated_by_name || 'N/A'}</dd>
                     </div>
                 </dl>
             </div>

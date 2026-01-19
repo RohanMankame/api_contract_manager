@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ProductInfoCard from '../components/infocards/ProductInfoCard';
 import ProductModal from '../components/modals/ProductModal';
-import { productService } from '../services';
+import { productService, userService } from '../services';
 
 export default function ProductDetailsPage() {
     const { id } = useParams();
@@ -19,6 +19,27 @@ export default function ProductDetailsPage() {
                 setLoading(true);
                 const response = await productService.getProductById(id);
                 const data = response.data?.data?.product || response.data?.data || response.data;
+
+                // Fetch user names for audit info
+                if (data.created_by) {
+                    try {
+                        const userRes = await userService.getUserById(data.created_by);
+                        const user = userRes.data?.data?.user || userRes.data?.data || userRes.data;
+                        data.created_by_name = user.full_name || user.username || 'N/A';
+                    } catch (err) {
+                        console.error('Failed to fetch creator details', err);
+                    }
+                }
+                if (data.updated_by) {
+                    try {
+                        const userRes = await userService.getUserById(data.updated_by);
+                        const user = userRes.data?.data?.user || userRes.data?.data || userRes.data;
+                        data.updated_by_name = user.full_name || user.username || 'N/A';
+                    } catch (err) {
+                        console.error('Failed to fetch updater details', err);
+                    }
+                }
+
                 setProduct(data);
                 setError(null);
             } catch (err) {

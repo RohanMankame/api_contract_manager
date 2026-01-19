@@ -3,7 +3,7 @@ import React from 'react';
 export default function ContractInfoCard({ contract, onEdit }) {
     if (!contract) return null;
 
-    const { contract_name, id, contract_id, start_date, end_date, is_archived, created_at, updated_at } = contract;
+    const { contract_name, id, contract_id, start_date, end_date, is_archived, created_at, updated_at, created_by_name, updated_by_name } = contract;
     const displayId = id || contract_id;
     const status = is_archived ? 'Archived' : 'Active';
     const statusColor = is_archived ? 'bg-gray-100 text-gray-800' : 'bg-green-100 text-green-800';
@@ -55,8 +55,16 @@ export default function ContractInfoCard({ contract, onEdit }) {
                         <dd className="mt-1 text-sm text-gray-900 font-medium">{created_at ? new Date(created_at).toLocaleString() : 'N/A'}</dd>
                     </div>
                     <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Created By</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{created_by_name || 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
                         <dt className="text-sm font-medium text-gray-500">Updated At</dt>
                         <dd className="mt-1 text-sm text-gray-900 font-medium">{updated_at ? new Date(updated_at).toLocaleString() : 'N/A'}</dd>
+                    </div>
+                    <div className="sm:col-span-1">
+                        <dt className="text-sm font-medium text-gray-500">Updated By</dt>
+                        <dd className="mt-1 text-sm text-gray-900 font-medium">{updated_by_name || 'N/A'}</dd>
                     </div>
 
                 </dl>

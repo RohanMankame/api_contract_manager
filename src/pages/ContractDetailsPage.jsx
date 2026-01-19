@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import ContractInfoCard from '../components/infocards/ContractInfoCard';
 import ContractModal from '../components/modals/ContractModal';
 import SubscriptionList from '../components/lists/SubscriptionList';
-import { contractService, rateCardService, clientService } from '../services';
+import { contractService, subscriptionService, rateCardService, clientService, userService } from '../services';
 import { generateContractDocument } from '../utils/contractExport';
 
 export default function ContractDetailsPage() {
@@ -49,6 +49,26 @@ export default function ContractDetailsPage() {
             } catch (err) {
                 console.error('Failed to fetch client details', err);
                 contractData.client_name = 'Unknown Client';
+            }
+        }
+
+        // Fetch user details for names
+        if (contractData.created_by) {
+            try {
+                const userRes = await userService.getUserById(contractData.created_by);
+                const user = userRes.data?.data?.user || userRes.data?.data || userRes.data;
+                contractData.created_by_name = user.full_name || user.username || 'N/A';
+            } catch (err) {
+                console.error('Failed to fetch creator details', err);
+            }
+        }
+        if (contractData.updated_by) {
+            try {
+                const userRes = await userService.getUserById(contractData.updated_by);
+                const user = userRes.data?.data?.user || userRes.data?.data || userRes.data;
+                contractData.updated_by_name = user.full_name || user.username || 'N/A';
+            } catch (err) {
+                console.error('Failed to fetch updater details', err);
             }
         }
 
