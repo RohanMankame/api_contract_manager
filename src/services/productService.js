@@ -18,6 +18,9 @@ const productService = {
 
   deleteProduct: (id) =>
     apiClient.delete(`/products/${id}`),
+
+  getProductContracts: (id) =>
+    apiClient.get(`/products/${id}/contracts`),
 };
 
 export default productService;
