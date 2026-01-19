@@ -57,17 +57,23 @@ export default function ProductDetailsPage() {
 
     return (
         <div className="mt-4 text-left space-y-6">
+
+            <button
+                onClick={() => navigate('/products')}
+                className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 mb-10 focus:outline-none"
+            >
+                <svg className="mr-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                Back to Products
+            </button>
+
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-xl font-medium text-gray-900">Product Details</h1>
                     <p className="text-gray-500 text-sm">Viewing details for product ID: {id}</p>
                 </div>
-                <button
-                    onClick={() => navigate('/products')}
-                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Back to Products
-                </button>
+
             </div>
 
             <ProductInfoCard
