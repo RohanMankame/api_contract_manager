@@ -52,8 +52,8 @@ export default function ProductModal({ isOpen, onClose, product, onSuccess }) {
         }
     };
 
-    const handleDelete = async () => {
-        if (!window.confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+    const handleArchive = async () => {
+        if (!window.confirm('Are you sure you want to archive this product?')) {
             return;
         }
         setLoading(true);
@@ -64,7 +64,7 @@ export default function ProductModal({ isOpen, onClose, product, onSuccess }) {
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.message || 'Failed to delete product.');
+            setError(err.response?.data?.message || 'Failed to archive product.');
         } finally {
             setLoading(false);
         }
@@ -118,11 +118,11 @@ export default function ProductModal({ isOpen, onClose, product, onSuccess }) {
                     {product ? (
                         <button
                             type="button"
-                            onClick={handleDelete}
+                            onClick={handleArchive}
                             disabled={loading}
                             className="text-red-600 hover:text-red-800 text-sm font-medium px-3 py-2 rounded transition-colors hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500"
                         >
-                            Delete
+                            Archive
                         </button>
                     ) : (
                         <div /> /* Spacer */

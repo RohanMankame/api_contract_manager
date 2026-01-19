@@ -100,8 +100,8 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
         }
     };
 
-    const handleDelete = async () => {
-        if (!window.confirm('Are you sure you want to delete this contract? This action cannot be undone.')) {
+    const handleArchive = async () => {
+        if (!window.confirm('Are you sure you want to archive this contract?')) {
             return;
         }
         setLoading(true);
@@ -112,7 +112,7 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.message || 'Failed to delete contract.');
+            setError(err.response?.data?.message || 'Failed to archive contract.');
         } finally {
             setLoading(false);
         }
@@ -204,11 +204,11 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
                     {contract ? (
                         <button
                             type="button"
-                            onClick={handleDelete}
+                            onClick={handleArchive}
                             disabled={loading}
                             className="text-red-600 hover:text-red-800 text-sm font-medium px-3 py-2 rounded transition-colors hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500"
                         >
-                            Delete
+                            Archive
                         </button>
                     ) : (
                         <div /> /* Spacer */

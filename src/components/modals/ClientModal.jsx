@@ -23,7 +23,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
                     phone_number: client.phone_number || '',
                     address: client.address || '',
                 });
-            } 
+            }
             // else adding a new client, reset form
             else {
                 setFormData({
@@ -62,9 +62,9 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
         }
     };
 
-    // Handle client deletion
-    const handleDelete = async () => {
-        if (!window.confirm('Are you sure you want to delete this client? This action cannot be undone.')) {
+    // Handle client archival
+    const handleArchive = async () => {
+        if (!window.confirm('Are you sure you want to archive this client?')) {
             return;
         }
         setLoading(true);
@@ -75,7 +75,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.message || 'Failed to delete client.');
+            setError(err.response?.data?.message || 'Failed to archive client.');
         } finally {
             setLoading(false);
         }
@@ -160,11 +160,11 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
                     {client ? (
                         <button
                             type="button"
-                            onClick={handleDelete}
+                            onClick={handleArchive}
                             disabled={loading}
                             className="text-red-600 hover:text-red-800 text-sm font-medium px-3 py-2 rounded transition-colors hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500"
                         >
-                            Delete Client
+                            Archive
                         </button>
                     ) : (
                         <div /> /* Spacer */
