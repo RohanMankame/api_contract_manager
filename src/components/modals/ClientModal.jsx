@@ -67,6 +67,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
             || err.response?.data?.message 
             || 'Failed to save client. Please try again.'
             );
+            
         } finally {
             setLoading(false);
         }

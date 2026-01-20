@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import ModalWrapper from '../ModalWrapper';
 import { contractService, clientService } from '../../services';
+import ErrorAlert from '../ErrorAlert';
 
 export default function ContractModal({ isOpen, onClose, contract, onSuccess }) {
     const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [showError, setShowError] = useState(true);
 
     // Fetch clients for dropdown
     useEffect(() => {
@@ -24,6 +26,7 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
                 .catch(err => {
                     console.error("Failed to load clients", err);
                     setError("Failed to load clients list.");
+                    setShowError(true);
                 })
                 .finally(() => setLoading(false));
         }
@@ -36,6 +39,7 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
                 // Maybe don't clear error immediately if it was about fetching clients
             } else {
                 setError(null);
+                setShowError(true);
             }
 
             if (contract) {
@@ -76,6 +80,7 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
         e.preventDefault();
         setLoading(true);
         setError(null);
+        setShowError(true);
         try {
             // Convert local datetime back to ISO if needed, or send as is if backend handles it.
             // Usually backend expects ISO.
@@ -103,6 +108,7 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
             || err.response?.data?.message 
             || 'Failed to save contract. Please try again.'
             );
+            setShowError(true);
         } finally {
             setLoading(false);
         }
@@ -114,6 +120,7 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
         }
         setLoading(true);
         setError(null);
+        setShowError(true);
         try {
             await contractService.deleteContract(contract.id);
             onSuccess();
@@ -142,10 +149,8 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
             title={contract ? 'Edit Contract' : 'Add New Contract'}
         >
             <form onSubmit={handleSubmit} className="space-y-4">
-                {error && (
-                    <div className="rounded-md bg-red-50 p-3 text-sm text-red-600 border border-red-200">
-                        {error}
-                    </div>
+                {error && showError && (
+                    <ErrorAlert error={error} onClose={() => setShowError(false)} />
                 )}
 
                 <div>
