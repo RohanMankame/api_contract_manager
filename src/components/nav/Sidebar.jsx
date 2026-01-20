@@ -30,8 +30,8 @@ export default function Sidebar() {
                 onClick={() => navigate(item.path)}
                 className="w-full h-15 relative group flex items-center gap-3 pl-4 pr-4 py-2 text-black-700 hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
             >
-                <span className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200 " />
-                <span className="group-hover:text-blue-500 group-focus:text-blue-500 transition-colors duration-200">
+                <span className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200 " />
+                <span className="group-hover:text-indigo-500 group-focus:text-indigo-500 transition-colors duration-200">
                 <Icon />
                 </span>
                 <span

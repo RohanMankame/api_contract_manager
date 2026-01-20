@@ -134,7 +134,7 @@ export default function ProductDetailsPage() {
                                             <ContractsIcon className="h-6 w-6" />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <h4 className="text-base font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 truncate">
+                                            <h4 className="text-base font-semibold text-gray-900  transition-colors duration-300 truncate">
                                                 {contract.contract_name || 'Unnamed Contract'}
                                             </h4>
                                             <p className="mt-1 text-sm font-medium text-gray-500 whitespace-nowrap">

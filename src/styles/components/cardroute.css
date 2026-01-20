@@ -13,12 +13,12 @@
 
 .group:hover .card-icon,
 .group:focus .card-icon {
-  background-color: var(--color-primary-50);
-  color: var(--color-primary-600);
+  background-color: oklch(96.2% 0.018 272.314);
+  color:oklch(51.1% 0.262 276.966);
 }
 
 .card-arrow {
-  color: var(--color-primary-500);
+  color: oklch(58.5% 0.233 277.117);
   opacity: 0;
   transition: opacity var(--transition-base);
   display: inline-flex;

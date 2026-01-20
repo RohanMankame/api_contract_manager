@@ -17,7 +17,7 @@ export default function AgGridTable({
   colDefs: initialColDefs = [],
   gridClassName = '',
   gridHeight = '600px',
-  pageSize = 5,
+  pageSize = 20,
   onRowClicked,
   headerActions,
 }) {
