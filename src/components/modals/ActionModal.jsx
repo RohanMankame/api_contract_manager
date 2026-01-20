@@ -6,11 +6,11 @@ export default function ActionModal({ isOpen, onClose, title, entityData, onView
         <ModalWrapper isOpen={isOpen} onClose={onClose} title={title}>
             <div className="space-y-6">
                 {/* Entity Info Box */}
-                <div className="bg-gray-50 rounded-lg p-4">
+                <div className="bg-gray-200 rounded-lg p-4">
                     <h3 className="text-lg font-medium text-gray-900 mb-1">
                         {entityData?.name || 'Unknown Entity'}
                     </h3>
-                    <p className="text-sm font-mono text-gray-500">
+                    <p className="text-sm font-mono text-gray-700">
                         ID: {entityData?.id || 'N/A'}
                     </p>
                 </div>
@@ -26,14 +26,14 @@ export default function ActionModal({ isOpen, onClose, title, entityData, onView
 
                     <button
                         onClick={onQuickEdit}
-                        className="w-full rounded-md bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        className="w-full rounded-md bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-100 duration-300"
                     >
                         Quick Edit
                     </button>
 
                     <button
                         onClick={onClose}
-                        className="w-full rounded-md bg-gray-50 px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100"
+                        className="w-full rounded-md bg-gray-50 px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-100 duration-300"
                     >
                         Close
                     </button>
