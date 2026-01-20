@@ -56,7 +56,13 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to save client. Please try again.');
+            setError( "ERROR: " +
+            (Array.isArray(err.response?.data?.errors.error) 
+                ? err.response.data.errors.error.join(', ')
+                : err.response?.data?.errors.error) 
+            || err.response?.data?.message 
+            || 'Failed to save client. Please try again.'
+            );
         } finally {
             setLoading(false);
         }
@@ -74,8 +80,16 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
             onSuccess();
             onClose();
         } catch (err) {
+            
             console.error(err);
-            setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to archive client.');
+
+            setError( "ERROR: " +
+            (Array.isArray(err.response?.data?.errors.error) 
+                ? err.response.data.errors.error.join(', ')
+                : err.response?.data?.errors.error) 
+            || err.response?.data?.message 
+            || 'Failed to archive client. Please try again.'
+            );
         } finally {
             setLoading(false);
         }

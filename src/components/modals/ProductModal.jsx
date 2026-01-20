@@ -46,7 +46,13 @@ export default function ProductModal({ isOpen, onClose, product, onSuccess }) {
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to save product. Please try again.');
+            setError( "ERROR: " +
+            (Array.isArray(err.response?.data?.errors.error) 
+                ? err.response.data.errors.error.join(', ')
+                : err.response?.data?.errors.error) 
+            || err.response?.data?.message 
+            || 'Failed to save product. Please try again.'
+            );
         } finally {
             setLoading(false);
         }
@@ -64,7 +70,13 @@ export default function ProductModal({ isOpen, onClose, product, onSuccess }) {
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to archive product.');
+            setError( "ERROR: " +
+            (Array.isArray(err.response?.data?.errors.error) 
+                ? err.response.data.errors.error.join(', ')
+                : err.response?.data?.errors.error) 
+            || err.response?.data?.message 
+            || 'Failed to archive product.'
+            );
         } finally {
             setLoading(false);
         }

@@ -124,7 +124,13 @@ export default function TierModal({ isOpen, onClose, rateCardId, onSuccess, init
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to save tiers.');
+            setError( "ERROR: " +
+            (Array.isArray(err.response?.data?.errors.error) 
+                ? err.response.data.errors.error.join(', ')
+                : err.response?.data?.errors.error) 
+            || err.response?.data?.message 
+            || 'Failed to save tiers. Please try again.'
+            );
         } finally {
             setLoading(false);
         }

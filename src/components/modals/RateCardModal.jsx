@@ -69,7 +69,13 @@ export default function RateCardModal({ isOpen, onClose, subscriptionId, onSucce
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.errors.error || err.response?.data?.message || `Failed to ${isEdit ? 'update' : 'create'} rate card.`);
+            setError( "ERROR: " +
+            (Array.isArray(err.response?.data?.errors.error) 
+                ? err.response.data.errors.error.join(', ')
+                : err.response?.data?.errors.error) 
+            || err.response?.data?.message 
+            || 'Failed to save rate card. Please try again.'
+            );
         } finally {
             setLoading(false);
         }
@@ -87,7 +93,13 @@ export default function RateCardModal({ isOpen, onClose, subscriptionId, onSucce
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to archive rate card.');
+            setError( "ERROR: " +
+            (Array.isArray(err.response?.data?.errors.error) 
+                ? err.response.data.errors.error.join(', ')
+                : err.response?.data?.errors.error) 
+            || err.response?.data?.message 
+            || 'Failed to archive rate card. Please try again.'
+            );
         } finally {
             setLoading(false);
         }

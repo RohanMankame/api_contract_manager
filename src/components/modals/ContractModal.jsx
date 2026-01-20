@@ -93,7 +93,9 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
             onSuccess();
             onClose();
         } catch (err) {
+            
             console.error(err);
+
            setError( "ERROR: " +
             (Array.isArray(err.response?.data?.errors.error) 
                 ? err.response.data.errors.error.join(', ')
@@ -117,8 +119,17 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
             onSuccess();
             onClose();
         } catch (err) {
+
             console.error(err);
-            setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to archive contract.');
+
+            setError( "ERROR: " +
+            (Array.isArray(err.response?.data?.errors.error) 
+                ? err.response.data.errors.error.join(', ')
+                : err.response?.data?.errors.error) 
+            || err.response?.data?.message 
+            || 'Failed to archive contract. Please try again.'
+            );
+
         } finally {
             setLoading(false);
         }
