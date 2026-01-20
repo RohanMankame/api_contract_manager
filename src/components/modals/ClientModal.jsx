@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import ModalWrapper from '../ModalWrapper';
 import { clientService } from '../../services';
+import ErrorAlert from '../ErrorAlert';
 
 export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
     const [formData, setFormData] = useState({
@@ -11,10 +12,12 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [showError, setShowError] = useState(true);
 
     useEffect(() => {
         if (isOpen) {
             setError(null);
+            setShowError(true);
             // if editing existing client, populate form
             if (client) {
                 setFormData({
@@ -46,6 +49,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
         e.preventDefault();
         setLoading(true);
         setError(null);
+        setShowError(true);
         try {
             if (client) {
                 await clientService.updateClient(client.id, formData);
@@ -75,12 +79,13 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
         }
         setLoading(true);
         setError(null);
+        setShowError(true);
         try {
             await clientService.deleteClient(client.id);
             onSuccess();
             onClose();
         } catch (err) {
-            
+
             console.error(err);
 
             setError( "ERROR: " +
@@ -102,10 +107,8 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
             title={client ? 'Edit Client' : 'Add New Client'}
         >
             <form onSubmit={handleSubmit} className="space-y-4">
-                {error && (
-                    <div className="rounded-md bg-red-50 p-3 text-sm text-red-600 border border-red-200">
-                        {error}
-                    </div>
+                {error && showError && (
+                    <ErrorAlert error={error} onClose={() => setShowError(false)} />
                 )}
 
                 <div>

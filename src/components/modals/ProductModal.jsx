@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import ModalWrapper from '../ModalWrapper';
 import { productService } from '../../services';
+import ErrorAlert from '../ErrorAlert';
 
 export default function ProductModal({ isOpen, onClose, product, onSuccess }) {
     const [formData, setFormData] = useState({
@@ -9,10 +10,13 @@ export default function ProductModal({ isOpen, onClose, product, onSuccess }) {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [showError, setShowError] = useState(true);
+    
 
     useEffect(() => {
         if (isOpen) {
             setError(null);
+            setShowError(true);
             if (product) {
                 setFormData({
                     api_name: product.api_name || '',
@@ -36,6 +40,7 @@ export default function ProductModal({ isOpen, onClose, product, onSuccess }) {
         e.preventDefault();
         setLoading(true);
         setError(null);
+        setShowError(true);
         try {
             if (product) {
                 await productService.updateProduct(product.id, formData);
@@ -64,6 +69,7 @@ export default function ProductModal({ isOpen, onClose, product, onSuccess }) {
         }
         setLoading(true);
         setError(null);
+        setShowError(true);
         try {
             await productService.deleteProduct(product.id);
             onSuccess();
@@ -89,10 +95,8 @@ export default function ProductModal({ isOpen, onClose, product, onSuccess }) {
             title={product ? 'Edit Product' : 'Add New Product'}
         >
             <form onSubmit={handleSubmit} className="space-y-4">
-                {error && (
-                    <div className="rounded-md bg-red-50 p-3 text-sm text-red-600 border border-red-200">
-                        {error}
-                    </div>
+                {error && showError && (
+                    <ErrorAlert error={error} onClose={() => setShowError(false)} />
                 )}
 
                 <div>
