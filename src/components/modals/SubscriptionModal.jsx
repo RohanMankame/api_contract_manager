@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { productService, contractService, subscriptionService } from '../../services';
 import ModalWrapper from '../ModalWrapper';
+import ErrorAlert from '../ErrorAlert';
 
 export default function SubscriptionModal({ isOpen, onClose, contractId, onSuccess, initialData = null }) {
   const [products, setProducts] = useState([]);
@@ -11,6 +12,7 @@ export default function SubscriptionModal({ isOpen, onClose, contractId, onSucce
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showError, setShowError] = useState(true);
 
   const isEdit = !!initialData;
 
@@ -27,6 +29,7 @@ export default function SubscriptionModal({ isOpen, onClose, contractId, onSucce
     if (isOpen) {
       fetchProducts();
       setError(null);
+      setShowError(true);
       if (initialData) {
         setFormData({
           product_id: initialData.product_id || '',
@@ -64,6 +67,7 @@ export default function SubscriptionModal({ isOpen, onClose, contractId, onSucce
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setShowError(true);
 
     try {
       if (isEdit) {
@@ -96,6 +100,7 @@ export default function SubscriptionModal({ isOpen, onClose, contractId, onSucce
     }
     setLoading(true);
     setError(null);
+    setShowError(true);
     try {
       await subscriptionService.deleteSubscription(initialData.id);
       onSuccess();
@@ -121,10 +126,8 @@ export default function SubscriptionModal({ isOpen, onClose, contractId, onSucce
       title={isEdit ? 'Edit Subscription' : 'Add Subscription'}
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        {error && (
-          <div className="rounded-md bg-red-50 p-4 text-sm text-red-800">
-            {error}
-          </div>
+        {error && showError && (
+          <ErrorAlert error={error} onClose={() => setShowError(false)} />
         )}
 
         <div>

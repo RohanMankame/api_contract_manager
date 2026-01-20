@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { rateCardService } from '../../services';
 import ModalWrapper from '../ModalWrapper';
+import ErrorAlert from '../ErrorAlert';
 
 export default function RateCardModal({ isOpen, onClose, subscriptionId, onSuccess, initialData = null }) {
     const [formData, setFormData] = useState({
@@ -9,12 +10,14 @@ export default function RateCardModal({ isOpen, onClose, subscriptionId, onSucce
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [showError, setShowError] = useState(true);
 
     const isEdit = !!initialData;
 
     useEffect(() => {
         if (isOpen) {
             setError(null);
+            setShowError(true);
             if (initialData) {
                 const formatForInput = (dateStr) => {
                     if (!dateStr) return '';
@@ -45,11 +48,13 @@ export default function RateCardModal({ isOpen, onClose, subscriptionId, onSucce
         e.preventDefault();
         setLoading(true);
         setError(null);
+        setShowError(true);
 
         try {
             const payload = {
                 start_date: new Date(formData.start_date).toISOString(),
                 end_date: new Date(formData.end_date).toISOString(),
+                subscription_id: subscriptionId,
             };
 
             if (isEdit) {
@@ -87,6 +92,7 @@ export default function RateCardModal({ isOpen, onClose, subscriptionId, onSucce
         }
         setLoading(true);
         setError(null);
+        setShowError(true);
         try {
             await rateCardService.deleteRateCard(initialData.id);
             onSuccess();
@@ -112,10 +118,8 @@ export default function RateCardModal({ isOpen, onClose, subscriptionId, onSucce
             title={isEdit ? 'Edit Rate Card' : 'Add Rate Card'}
         >
             <form onSubmit={handleSubmit} className="space-y-4">
-                {error && (
-                    <div className="rounded-md bg-red-50 p-4 text-sm text-red-800">
-                        {error}
-                    </div>
+                {error && showError && (
+                    <ErrorAlert error={error} onClose={() => setShowError(false)} />
                 )}
 
                 <div>
