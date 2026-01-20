@@ -88,11 +88,11 @@ export default function TierModal({ isOpen, onClose, rateCardId, onSuccess, init
         // Final validation
         const lastTier = tiers[tiers.length - 1];
         if (!lastTier.is_infinite && !lastTier.max_calls) {
-            setError("The last tier must either be infinite or have a max calls value.");
+            setError("Tier must either be infinite or have a max calls value.");
             return;
         }
         if (!lastTier.unit_price) {
-            setError("The last tier must have a unit price.");
+            setError("Tier must have a unit price.");
             return;
         }
 
@@ -124,7 +124,7 @@ export default function TierModal({ isOpen, onClose, rateCardId, onSuccess, init
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.message || 'Failed to save tiers.');
+            setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to save tiers.');
         } finally {
             setLoading(false);
         }

@@ -56,7 +56,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.message || 'Failed to save client. Please try again.');
+            setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to save client. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -75,7 +75,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
             onClose();
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.message || 'Failed to archive client.');
+            setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to archive client.');
         } finally {
             setLoading(false);
         }
@@ -106,7 +106,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
                         value={formData.company_name}
                         onChange={handleChange}
                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2 border bg-white"
-                        placeholder="Acme Corp"
+                        placeholder="Lion Rentals Corp"
                     />
                 </div>
 
@@ -122,7 +122,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
                         value={formData.email}
                         onChange={handleChange}
                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2 border bg-white"
-                        placeholder="sample@gmail.com"
+                        placeholder="sample@lionrentals.com"
                     />
                 </div>
 
@@ -152,7 +152,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
                         value={formData.address}
                         onChange={handleChange}
                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2 border bg-white"
-                        placeholder="123 Main St"
+                        placeholder="123 Nittny Lion Ln, Main St, 28938"
                     />
                 </div>
 

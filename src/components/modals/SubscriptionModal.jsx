@@ -78,7 +78,7 @@ export default function SubscriptionModal({ isOpen, onClose, contractId, onSucce
       onClose();
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.message || `Failed to ${isEdit ? 'update' : 'create'} subscription.`);
+      setError(err.response?.data?.errors.error || err.response?.data?.message || `Failed to ${isEdit ? 'update' : 'create'} subscription.`);
     } finally {
       setLoading(false);
     }
@@ -96,7 +96,7 @@ export default function SubscriptionModal({ isOpen, onClose, contractId, onSucce
       onClose();
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.message || 'Failed to archive subscription.');
+      setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to archive subscription.');
     } finally {
       setLoading(false);
     }

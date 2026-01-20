@@ -31,7 +31,7 @@ export default function UserModal({ isOpen, onClose, user, onSuccess }) {
             onClose();
         } catch (err) {
             console.error('Failed to update user:', err);
-            setError(err.response?.data?.message || 'Failed to update user profile. Please try again.');
+            setError(err.response?.data?.errors.error || err.response?.data?.message || 'Failed to update user profile. Please try again.');
         } finally {
             setLoading(false);
         }
