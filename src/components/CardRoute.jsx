@@ -1,4 +1,3 @@
-// src/components/CardRoute.jsx
 import { useNavigate } from 'react-router-dom';
 import { ArrowIcon } from './icons';
 import '../styles/components/cardroute.css';

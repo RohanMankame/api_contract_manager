@@ -122,13 +122,13 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
                         value={formData.email}
                         onChange={handleChange}
                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2 border bg-white"
-                        placeholder="contact@acme.com"
+                        placeholder="sample@gmail.com"
                     />
                 </div>
 
                 <div>
                     <label htmlFor="phone_number" className="block text-sm font-medium text-gray-700 mb-1">
-                        Phone Number
+                        Phone Number *
                     </label>
                     <input
                         type="tel"
@@ -137,7 +137,7 @@ export default function ClientModal({ isOpen, onClose, client, onSuccess }) {
                         value={formData.phone_number}
                         onChange={handleChange}
                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2 border bg-white"
-                        placeholder="+1-555-0000"
+                        placeholder="555-555-5555"
                     />
                 </div>
 

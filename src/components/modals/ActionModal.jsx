@@ -19,7 +19,7 @@ export default function ActionModal({ isOpen, onClose, title, entityData, onView
                 <div className="flex flex-col gap-3">
                     <button
                         onClick={onViewDetails}
-                        className="w-full rounded-md bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="w-full rounded-md bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         View Details
                     </button>

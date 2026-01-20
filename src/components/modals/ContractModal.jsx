@@ -165,7 +165,7 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
                         value={formData.contract_name}
                         onChange={handleChange}
                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2 border bg-white"
-                        placeholder="e.g. Annual Licensing 2026"
+                        placeholder="e.g. Annual Deal 2026"
                     />
                 </div>
 
