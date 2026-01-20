@@ -30,7 +30,7 @@ function RateCardItem({ rateCard, onRefresh, onManageTiers }) {
                     {/* Edit Rate Card Details */}
                     <button
                         onClick={(e) => { e.stopPropagation(); setIsEditOpen(true); }}
-                        className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-indigo-100 duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                         <EditIcon className="-ml-0.5 mr-2 h-4 w-4 text-gray-500" />
                         Edit Details
@@ -38,7 +38,7 @@ function RateCardItem({ rateCard, onRefresh, onManageTiers }) {
                     {/* Manage Tiers (Bulk Add/Edit) */}
                     <button
                         onClick={(e) => { e.stopPropagation(); onManageTiers(rateCard); }}
-                        className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-indigo-100 duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                         <SettingsIcon className="-ml-0.5 mr-2 h-4 w-4 text-gray-500" />
                         Manage Tiers
@@ -99,7 +99,7 @@ export default function RateCardList({ subscriptionId, initialRateCards, onRefre
                 <h4 className="text-sm font-medium text-gray-900">Rate Cards</h4>
                 <button
                     onClick={() => setIsAddOpen(true)}
-                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-indigo-100 duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                     <PlusIcon className="-ml-0.5 mr-2 h-4 w-4 text-gray-500" />
                     Rate Card

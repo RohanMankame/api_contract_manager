@@ -106,10 +106,10 @@ export default function ContractsPage() {
           headerActions={
             <button
               onClick={handleAddClick}
-              className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-indigo-100 duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 "
             >
               <PlusIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" />
-              Contract
+              Add Contract
             </button>
           }
         />
