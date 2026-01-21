@@ -139,14 +139,14 @@ export default function SubscriptionModal({ isOpen, onClose, contractId, onSucce
             onChange={handleChange}
             required
             disabled={isEdit}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2 bg-white"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2 bg-white disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-100"
           >
             <option value="">Select a Product</option>
             {products.map(p => (
               <option key={p.id} value={p.id}>{p.api_name}</option>
             ))}
           </select>
-          {isEdit && <p className="text-xs text-gray-500 mt-1">Product cannot be changed once created.</p>}
+          {isEdit && <p className="text-xs text-gray-500 mt-1">Subscription's Product cannot be changed.</p>}
         </div>
 
         <div>
