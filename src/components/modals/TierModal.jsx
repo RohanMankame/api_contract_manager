@@ -3,7 +3,7 @@ import { subscriptionTierService, rateCardService } from '../../services';
 import ModalWrapper from '../ModalWrapper';
 import { PlusIcon, TrashIcon } from '../icons';
 
-export default function TierModal({ isOpen, onClose, rateCardId, onSuccess, initialData = null }) {
+export default function TierModal({ isOpen, onClose, rateCardId, onSuccess, initialData = null, pricingType, strategy }) {
     const [tiers, setTiers] = useState([{ min_calls: 1, max_calls: '', unit_price: '', is_infinite: false }]);
     const [originalTiers, setOriginalTiers] = useState([]);
     const [error, setError] = useState(null);
@@ -124,25 +124,26 @@ export default function TierModal({ isOpen, onClose, rateCardId, onSuccess, init
             onClose();
         } catch (err) {
             console.error(err);
-            setError( "ERROR: " +
-            (Array.isArray(err.response?.data?.errors.error) 
-                ? err.response.data.errors.error.join(', ')
-                : err.response?.data?.errors.error) 
-            || err.response?.data?.message 
-            || 'Failed to save tiers. Please try again.'
+            setError("ERROR: " +
+                (Array.isArray(err.response?.data?.errors.error)
+                    ? err.response.data.errors.error.join(', ')
+                    : err.response?.data?.errors.error)
+                || err.response?.data?.message
+                || 'Failed to save tiers. Please try again.'
             );
         } finally {
             setLoading(false);
         }
     };
 
+    const isFixedFixed = pricingType === 'Fixed' && strategy === 'Fixed';
     const isLastTierValid = () => {
         const lastTier = tiers[tiers.length - 1];
         if (lastTier.is_infinite) return lastTier.unit_price !== '';
         return lastTier.max_calls !== '' && lastTier.unit_price !== '';
     };
 
-    const canAddTier = !tiers[tiers.length - 1].is_infinite && isLastTierValid();
+    const canAddTier = !tiers[tiers.length - 1].is_infinite && isLastTierValid() && (!isFixedFixed || tiers.length === 0);
 
     return (
         <ModalWrapper
@@ -238,7 +239,7 @@ export default function TierModal({ isOpen, onClose, rateCardId, onSuccess, init
                             type="button"
                             onClick={addTierRow}
                             disabled={!canAddTier}
-                            className={`inline-flex items-center text-sm font-medium ${canAddTier ? 'text-indigo-600 hover:text-indigo-800' : 'text-gray-300 cursor-not-allowed'}`}
+                            className={`inline-flex items-center text-sm font-medium ${canAddTier ? 'text-indigo-600 hover:text-indigo-800' : 'text-gray-300 cursor-not-allowed opacity-50'}`}
                         >
                             <PlusIcon className="mr-1 h-5 w-5" />
                             Add another tier

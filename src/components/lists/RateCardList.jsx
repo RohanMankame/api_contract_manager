@@ -63,7 +63,7 @@ function RateCardItem({ rateCard, onRefresh, onManageTiers }) {
     );
 }
 
-export default function RateCardList({ subscriptionId, initialRateCards, onRefresh }) {
+export default function RateCardList({ subscriptionId, initialRateCards, onRefresh, pricingType, strategy }) {
     const [isAddOpen, setIsAddOpen] = useState(false);
     const [rateCards, setRateCards] = useState(initialRateCards || []);
 
@@ -134,6 +134,8 @@ export default function RateCardList({ subscriptionId, initialRateCards, onRefre
                 rateCardId={tierModalConfig.rateCardId}
                 initialData={tierModalConfig.tiers}
                 onSuccess={onRefresh}
+                pricingType={pricingType}
+                strategy={strategy}
             />
         </div>
     );

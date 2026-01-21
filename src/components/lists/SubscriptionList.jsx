@@ -53,6 +53,8 @@ function SubscriptionCard({ subscription, onRefresh }) {
                         subscriptionId={id}
                         initialRateCards={displayRateCards}
                         onRefresh={onRefresh}
+                        pricingType={pricing_type}
+                        strategy={strategy}
                     />
                 </div>
             )}
