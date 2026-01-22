@@ -137,10 +137,14 @@ export default function TierModal({ isOpen, onClose, rateCardId, onSuccess, init
     };
 
     const isFixedFixed = pricingType === 'Fixed' && strategy === 'Fixed';
+    
     const isLastTierValid = () => {
         const lastTier = tiers[tiers.length - 1];
+        const minCalls = parseInt(lastTier.min_calls, 10);
+        const maxCalls = parseInt(lastTier.max_calls, 10);
+        
         if (lastTier.is_infinite) return lastTier.unit_price !== '';
-        return lastTier.max_calls !== '' && lastTier.unit_price !== '';
+        return lastTier.max_calls !== '' && lastTier.unit_price !== '' && minCalls < maxCalls;
     };
 
     const canAddTier = !tiers[tiers.length - 1].is_infinite && isLastTierValid() && (!isFixedFixed || tiers.length === 0);
