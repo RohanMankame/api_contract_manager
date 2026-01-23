@@ -74,8 +74,12 @@ export default function ClientsPage() {
           fetcher={fetchClients}
           colDefs={clientCols}
           gridHeight="500px"
-          onRowClicked={handleRowClick}
+          onRowDoubleClicked={handleRowClick}
           onViewDetails={(data) => navigate(`/clients/${data.id || data.client_id}`)}
+          onEditRow={(data) => {
+            setSelectedClient(data);
+            setIsModalOpen(true);
+          }}
           headerActions={
             <button
               onClick={handleAddClick}

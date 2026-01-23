@@ -102,8 +102,12 @@ export default function ContractsPage() {
           fetcher={fetchContracts}
           colDefs={contractCols}
           gridHeight="500px"
-          onRowClicked={handleRowClick}
+          onRowDoubleClicked={handleRowClick}
           onViewDetails={(data) => navigate(`/contracts/${data.id || data.contract_id}`)}
+          onEditRow={(data) => {
+            setSelectedContract(data);
+            setIsModalOpen(true);
+          }}
           headerActions={
             <button
               onClick={handleAddClick}

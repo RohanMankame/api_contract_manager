@@ -73,8 +73,12 @@ export default function ProductsPage() {
           fetcher={fetchProducts}
           colDefs={productCols}
           gridHeight="500px"
-          onRowClicked={handleRowClick}
+          onRowDoubleClicked={handleRowClick}
           onViewDetails={(data) => navigate(`/products/${data.id || data.product_id}`)}
+          onEditRow={(data) => {
+            setSelectedProduct(data);
+            setIsModalOpen(true);
+          }}
           headerActions={
             <button
               onClick={handleAddClick}

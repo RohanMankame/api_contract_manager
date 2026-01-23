@@ -1,26 +1,35 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ModuleRegistry, AllCommunityModule, themeQuartz } from 'ag-grid-community';
-import { SearchIcon, DownloadIcon, EyeIcon } from './icons';
+import { SearchIcon, DownloadIcon, EyeIcon, EditIcon } from './icons';
 
 
-// actions cell renderer
 const ActionsCellRenderer = (params) => {
   return (
-    <div className="flex items-center justify-center h-full">
+    <div className="flex items-center justify-center h-full gap-4">
       <button
         onClick={(e) => {
           e.stopPropagation();
           if (params.onViewDetails) {
             params.onViewDetails(params.data);
-          } else if (params.onRowClicked) {
-            params.onRowClicked({ data: params.data });
           }
         }}
         className="inline-flex items-center justify-center p-1.5 rounded-md border border-gray-300 bg-white text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-400 hover:ring-1 hover:ring-indigo-400"
         title="View Details"
       >
         <EyeIcon className="h-4 w-4" />
+      </button>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          if (params.onEditRow) {
+            params.onEditRow(params.data);
+          }
+        }}
+        className="inline-flex items-center justify-center p-1.5 rounded-md border border-gray-300 bg-white text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-400 hover:ring-1 hover:ring-indigo-400"
+        title="Edit"
+      >
+        <EditIcon className="h-4 w-4" />
       </button>
     </div>
   );
@@ -41,8 +50,9 @@ export default function AgGridTable({
   gridClassName = '',
   gridHeight = '600px',
   pageSize = 20,
-  onRowClicked,
+  onRowDoubleClicked,
   onViewDetails,
+  onEditRow,
   headerActions,
 }) {
   const [rowData, setRowData] = useState([]);
@@ -99,19 +109,26 @@ export default function AgGridTable({
         field: 'actions',
         cellRenderer: ActionsCellRenderer,
         cellRendererParams: {
-          onRowClicked: onRowClicked,
           onViewDetails: onViewDetails,
+          onEditRow: onEditRow,
         },
         pinned: 'right',
-        width: 100,
+        width: 140,
         resizable: false,
         sortable: false,
         filter: false,
+        suppressNavigable: true,
       }
     ];
-  }, [initialColDefs, rowData, onRowClicked, onViewDetails]);
+  }, [initialColDefs, rowData, onViewDetails, onEditRow]);
 
   const gridOptions = useMemo(() => ({ theme: myTheme }), []);
+
+  const handleRowDoubleClicked = useCallback((params) => {
+    if (onRowDoubleClicked) {
+      onRowDoubleClicked(params);
+    }
+  }, [onRowDoubleClicked]);
 
   const onGridReady = (params) => {
     setGridApi(params.api);
@@ -181,7 +198,7 @@ export default function AgGridTable({
           pagination={true}
           paginationPageSize={pageSize}
           rowSelection={{ type: 'single' }}
-          onRowClicked={onRowClicked}
+          onRowDoubleClicked={handleRowDoubleClicked}
           onGridReady={onGridReady}
         />
       </div>
