@@ -86,7 +86,7 @@ export default function ClientsPage() {
               className="group inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-500 hover:ring-1 hover:ring-indigo-500 focus:outline-none"
             >
               <PlusIcon className="-ml-1 mr-2 h-5 w-5 transition-colors duration-200" />
-              New Client
+              Add Client
             </button>
           }
         />
