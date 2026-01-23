@@ -14,7 +14,7 @@ const ActionsCellRenderer = (params) => {
             params.onViewDetails(params.data);
           }
         }}
-        className="inline-flex items-center justify-center p-1.5 rounded-md border border-gray-300 bg-white text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-400 hover:ring-1 hover:ring-indigo-400"
+        className="inline-flex items-center justify-center p-1.5 rounded-md border border-gray-300 bg-white text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-500 hover:ring-1 hover:ring-indigo-500"
         title="View Details"
       >
         <EyeIcon className="h-4 w-4" />
@@ -26,7 +26,7 @@ const ActionsCellRenderer = (params) => {
             params.onEditRow(params.data);
           }
         }}
-        className="inline-flex items-center justify-center p-1.5 rounded-md border border-gray-300 bg-white text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-400 hover:ring-1 hover:ring-indigo-400"
+        className="inline-flex items-center justify-center p-1.5 rounded-md border border-gray-300 bg-white text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-500 hover:ring-1 hover:ring-indigo-500"
         title="Edit"
       >
         <EditIcon className="h-4 w-4" />
@@ -160,16 +160,16 @@ export default function AgGridTable({
       {/* Toolbar */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
         {/* Search Bar */}
-        <div className="relative w-full max-w-xs">
+        <div className="group relative w-full max-w-xs">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-            <SearchIcon className="h-10 w-5 text-gray-400" />
+            <SearchIcon className="h-5 w-5 text-gray-400 transition-colors duration-200 group-hover:text-indigo-700 group-focus-within:text-indigo-700" />
           </div>
           <input
             type="text"
             placeholder="Search..."
             value={searchText}
             onChange={handleSearchChange}
-            className="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white shadow-sm hover:bg-indigo-100 duration-300"
+            className="block w-full rounded-md border border-gray-300 py-1.5 pl-10 pr-3 text-gray-900 shadow-sm transition-all duration-200 placeholder:text-gray-400 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-500 focus:bg-indigo-50 focus:text-indigo-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm sm:leading-6 bg-white"
           />
         </div>
 
@@ -177,12 +177,10 @@ export default function AgGridTable({
         <div className="flex items-center gap-2">
           <button
             onClick={handleExportCsv}
-            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-indigo-100 duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 "
+            className="group inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-500 hover:ring-1 hover:ring-indigo-500 focus:outline-none"
             title="Export CSV"
           >
-            <svg className="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
+            <DownloadIcon className="-ml-1 mr-2 h-5 w-5 transition-colors duration-200" />
             Download CSV
           </button>
           {headerActions}
