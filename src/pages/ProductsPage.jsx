@@ -64,7 +64,7 @@ export default function ProductsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-medium text-gray-900">Products</h1>
-          <p className="text-gray-500 text-sm">Manage your API Products.</p>
+          <p className="text-gray-500 text-sm">Manage API Products. Click on table rows for actions.</p>
         </div>
       </div>
 

@@ -65,7 +65,7 @@ export default function ClientsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-medium text-gray-900">Clients</h1>
-          <p className="text-gray-500 text-sm">Manage your clients.</p>
+          <p className="text-gray-500 text-sm">Manage clients. Click on table rows for actions.</p>
         </div>
       </div>
 

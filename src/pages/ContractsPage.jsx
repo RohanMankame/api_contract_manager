@@ -93,7 +93,7 @@ export default function ContractsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-medium text-gray-900">Contracts</h1>
-          <p className="text-gray-500 text-sm">Manage your contracts.</p>
+          <p className="text-gray-500 text-sm">Manage contracts. Click on table rows for actions.</p>
         </div>
       </div>
 
