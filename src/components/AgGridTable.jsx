@@ -1,7 +1,30 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ModuleRegistry, AllCommunityModule, themeQuartz } from 'ag-grid-community';
-import { SearchIcon, DownloadIcon } from './icons';
+import { SearchIcon, DownloadIcon, EyeIcon } from './icons';
+
+
+// actions cell renderer
+const ActionsCellRenderer = (params) => {
+  return (
+    <div className="flex items-center justify-center h-full">
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          if (params.onViewDetails) {
+            params.onViewDetails(params.data);
+          } else if (params.onRowClicked) {
+            params.onRowClicked({ data: params.data });
+          }
+        }}
+        className="inline-flex items-center justify-center p-1.5 rounded-md border border-gray-300 bg-white text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-400 hover:ring-1 hover:ring-indigo-400"
+        title="View Details"
+      >
+        <EyeIcon className="h-4 w-4" />
+      </button>
+    </div>
+  );
+};
 
 // register community modules
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -19,6 +42,7 @@ export default function AgGridTable({
   gridHeight = '600px',
   pageSize = 20,
   onRowClicked,
+  onViewDetails,
   headerActions,
 }) {
   const [rowData, setRowData] = useState([]);
@@ -49,18 +73,43 @@ export default function AgGridTable({
   }, [fetcher]);
 
   const colDefs = useMemo(() => {
-    if (initialColDefs && initialColDefs.length) return initialColDefs;
-    if (!rowData || rowData.length === 0) return [{ field: 'id', headerName: 'ID' }];
-    const keys = Object.keys(rowData[0]);
-    return keys.map((k) => ({
-      field: k,
-      headerName: k.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-      sortable: true,
-      filter: true,
-      resizable: true,
-      flex: 1,
-    }));
-  }, [initialColDefs, rowData]);
+    let baseCols = [];
+    if (initialColDefs && initialColDefs.length) {
+      baseCols = initialColDefs;
+    } else if (rowData && rowData.length > 0) {
+      const keys = Object.keys(rowData[0]);
+      baseCols = keys.map((k) => ({
+        field: k,
+        headerName: k.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+        sortable: true,
+        filter: true,
+        resizable: true,
+        flex: 1,
+      }));
+    }
+
+    if (baseCols.length === 0) {
+      return [{ field: 'id', headerName: 'ID' }];
+    }
+
+    return [
+      ...baseCols,
+      {
+        headerName: 'Actions',
+        field: 'actions',
+        cellRenderer: ActionsCellRenderer,
+        cellRendererParams: {
+          onRowClicked: onRowClicked,
+          onViewDetails: onViewDetails,
+        },
+        pinned: 'right',
+        width: 100,
+        resizable: false,
+        sortable: false,
+        filter: false,
+      }
+    ];
+  }, [initialColDefs, rowData, onRowClicked, onViewDetails]);
 
   const gridOptions = useMemo(() => ({ theme: myTheme }), []);
 
@@ -110,14 +159,14 @@ export default function AgGridTable({
         {/* Header Actions (Download Icon, Add Button) */}
         <div className="flex items-center gap-2">
           <button
-              onClick={handleExportCsv}
-              className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-indigo-100 duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 "
-              title="Export CSV"
+            onClick={handleExportCsv}
+            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-indigo-100 duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 "
+            title="Export CSV"
           >
-              <svg className="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-              </svg>
-              Download CSV
+            <svg className="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            Download CSV
           </button>
           {headerActions}
         </div>

@@ -74,6 +74,7 @@ export default function ProductsPage() {
           colDefs={productCols}
           gridHeight="500px"
           onRowClicked={handleRowClick}
+          onViewDetails={(data) => navigate(`/products/${data.id || data.product_id}`)}
           headerActions={
             <button
               onClick={handleAddClick}

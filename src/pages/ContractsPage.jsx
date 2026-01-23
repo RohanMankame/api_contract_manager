@@ -103,6 +103,7 @@ export default function ContractsPage() {
           colDefs={contractCols}
           gridHeight="500px"
           onRowClicked={handleRowClick}
+          onViewDetails={(data) => navigate(`/contracts/${data.id || data.contract_id}`)}
           headerActions={
             <button
               onClick={handleAddClick}

@@ -75,6 +75,7 @@ export default function ClientsPage() {
           colDefs={clientCols}
           gridHeight="500px"
           onRowClicked={handleRowClick}
+          onViewDetails={(data) => navigate(`/clients/${data.id || data.client_id}`)}
           headerActions={
             <button
               onClick={handleAddClick}
