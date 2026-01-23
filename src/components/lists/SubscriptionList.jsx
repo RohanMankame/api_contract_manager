@@ -37,9 +37,9 @@ function SubscriptionCard({ subscription, onRefresh }) {
 
                         <button
                             onClick={(e) => { e.stopPropagation(); setIsEditOpen(true); }}
-                            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-indigo-100 duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="group inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-500 hover:ring-1 hover:ring-indigo-500 focus:outline-none"
                         >
-                            <EditIcon className="-ml-0.5 mr-2 h-4 w-4 text-gray-500" />
+                            <EditIcon className="-ml-0.5 mr-2 h-4 w-4 transition-colors duration-200" />
                             Edit
                         </button>
                     </div>
@@ -81,9 +81,9 @@ export default function SubscriptionList({ subscriptions, contractId, onRefresh 
                 <h2 className="text-lg font-medium text-gray-900">Subscriptions</h2>
                 <button
                     onClick={() => setIsAddOpen(true)}
-                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-indigo-100 duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="group inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-500 hover:ring-1 hover:ring-indigo-500 focus:outline-none"
                 >
-                    <PlusIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" />
+                    <PlusIcon className="-ml-1 mr-2 h-5 w-5 transition-colors duration-200" />
                     Subscription
                 </button>
             </div>
