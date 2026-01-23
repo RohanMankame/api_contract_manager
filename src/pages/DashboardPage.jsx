@@ -2,9 +2,9 @@ import CardRoute from '../components/CardRoute';
 import { ProductsIcon, ClientsIcon, ContractsIcon } from '../components/icons';
 
 const cards = [
-  { title: 'Clients', desc: 'Manage your clients', icon: ClientsIcon, path: '/clients' },
-  { title: 'Products', desc: 'Manage your products', icon: ProductsIcon, path: '/products' },
-  { title: 'Contracts', desc: 'Manage your contracts', icon: ContractsIcon, path: '/contracts' },
+  { title: 'Clients', desc: 'Manage & View Clients', icon: ClientsIcon, path: '/clients' },
+  { title: 'Products', desc: 'Manage & View Products', icon: ProductsIcon, path: '/products' },
+  { title: 'Contracts', desc: 'Manage & View Contracts', icon: ContractsIcon, path: '/contracts' },
 ];
 
 export default function DashboardPage() {
@@ -13,9 +13,8 @@ export default function DashboardPage() {
     <div className="mt-4 text-left">
       <div>
         <h1 className="text-xl font-medium text-gray-900">Dashboard</h1>
-        <p>
-          Welcome to your dashboard. Use the cards below to navigate through different
-          sections.
+        <p className="text-gray-500 text-sm" >
+          Use the cards to navigate through different sections.
         </p>
       </div>
 
