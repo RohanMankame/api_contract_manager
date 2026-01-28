@@ -52,10 +52,11 @@ export default function RateCardModal({ isOpen, onClose, subscriptionId, onSucce
 
         try {
             const payload = {
-                start_date: new Date(formData.start_date).toISOString(),
-                end_date: new Date(formData.end_date).toISOString(),
+                start_date: formData.start_date,
+                end_date: formData.end_date,
                 subscription_id: subscriptionId,
             };
+
 
             if (isEdit) {
                 await rateCardService.updateRateCard(initialData.id, payload);
@@ -68,7 +69,6 @@ export default function RateCardModal({ isOpen, onClose, subscriptionId, onSucce
                 // Pass the new ID to the success callback
                 // Response structure: res.data.data.rate_card.id
                 const newId = res.data?.data?.rate_card?.id || res.data?.data?.id || res.data?.id;
-                console.log('RateCardModal: Created Rate Card ID:', newId);
                 onSuccess(newId);
             }
             onClose();

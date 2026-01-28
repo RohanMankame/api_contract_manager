@@ -36,22 +36,16 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
         if (isOpen) {
             // Keep existing error if client fetch failed
             if (!clients.length && !loading) {
-                // Maybe don't clear error immediately if it was about fetching clients
             } else {
                 setError(null);
                 setShowError(true);
             }
 
             if (contract) {
-                // Format dates for datetime-local input (YYYY-MM-DDTHH:mm)
-                // Assuming API returns ISO strings (2026-01-01T00:00:00Z)
+               
                 const formatForInput = (dateStr) => {
                     if (!dateStr) return '';
-                    const date = new Date(dateStr);
-                    // Local ISO string hack
-                    const offset = date.getTimezoneOffset() * 60000;
-                    const localISOTime = (new Date(date - offset)).toISOString().slice(0, 16);
-                    return localISOTime;
+                    return dateStr.slice(0, 16);
                 };
 
                 setFormData({
@@ -82,12 +76,12 @@ export default function ContractModal({ isOpen, onClose, contract, onSuccess }) 
         setError(null);
         setShowError(true);
         try {
-            // Convert local datetime back to ISO if needed, or send as is if backend handles it.
-            // Usually backend expects ISO.
+            
             const payload = {
-                ...formData,
-                start_date: new Date(formData.start_date).toISOString(),
-                end_date: new Date(formData.end_date).toISOString(),
+                contract_name: formData.contract_name,
+                client_id: formData.client_id,
+                start_date: formData.start_date,
+                end_date: formData.end_date,
             };
 
             if (contract) {
