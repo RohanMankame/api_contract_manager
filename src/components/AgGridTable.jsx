@@ -3,6 +3,8 @@ import { AgGridReact } from 'ag-grid-react';
 import { ModuleRegistry, AllCommunityModule, themeQuartz } from 'ag-grid-community';
 import { SearchIcon, DownloadIcon, EyeIcon, EditIcon } from './icons';
 
+import { LoadingSpinner } from '../components/icons';
+
 
 const ActionsCellRenderer = (params) => {
   return (
@@ -149,8 +151,9 @@ export default function AgGridTable({
   }, [gridApi]);
 
   if (loading) return (
-    <div className="flex justify-center items-center py-10">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+    <div className="flex flex-col justify-center items-center py-10">
+      <LoadingSpinner className="h-8 w-8 text-indigo-600" />
+      <p className="mt-2 text-gray-500">Loading Table...</p>
     </div>
   );
   if (error) return <div className="text-red-600">Error loading data</div>;
