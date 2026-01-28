@@ -75,7 +75,7 @@ export default function ProductDetailsPage() {
         return (
             <div className="flex flex-col justify-center items-center py-10">
                 <LoadingSpinner className="h-8 w-8 text-indigo-600" />
-                <p className="mt-2 text-gray-500">Fetching Product Details...</p>
+                <p className="mt-2 text-gray-500">Fetching Details for Product ID: {id}</p>
             </div>
         );
     }

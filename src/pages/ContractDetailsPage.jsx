@@ -5,6 +5,7 @@ import ContractModal from '../components/modals/ContractModal';
 import SubscriptionList from '../components/lists/SubscriptionList';
 import { contractService, subscriptionService, rateCardService, clientService, userService } from '../services';
 import { generateContractDocument } from '../utils/contractExport';
+import { LoadingSpinner } from '../components/icons';
 
 export default function ContractDetailsPage() {
     const { id } = useParams();
@@ -112,8 +113,9 @@ export default function ContractDetailsPage() {
 
     if (loading) {
         return (
-            <div className="mt-8 flex justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+            <div className="flex flex-col justify-center items-center py-10">
+                <LoadingSpinner className="h-8 w-8 text-indigo-600" />
+                <p className="mt-2 text-gray-500">Fetching Details for Contract ID: {id}</p>
             </div>
         );
     }

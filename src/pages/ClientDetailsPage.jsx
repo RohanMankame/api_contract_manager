@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import ClientInfoCard from '../components/infocards/ClientInfoCard';
 import ClientModal from '../components/modals/ClientModal';
 import { clientService, userService } from '../services';
-import { ContractsIcon, ArrowIcon } from '../components/icons';
+import { ContractsIcon, ArrowIcon, LoadingSpinner } from '../components/icons';
 
 export default function ClientDetailsPage() {
     const { id } = useParams();
@@ -73,8 +73,9 @@ export default function ClientDetailsPage() {
 
     if (loading) {
         return (
-            <div className="mt-8 flex justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+            <div className="flex flex-col justify-center items-center py-10">
+                    <LoadingSpinner className="h-8 w-8 text-indigo-600" />
+                    <p className="mt-2 text-gray-500">Fetching Details for Client ID: {id}</p>
             </div>
         );
     }
