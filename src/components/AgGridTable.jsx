@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ModuleRegistry, AllCommunityModule, themeQuartz } from 'ag-grid-community';
 import { SearchIcon, DownloadIcon, EyeIcon, EditIcon } from './icons';
-
 import { LoadingSpinner } from '../components/icons';
 
 
