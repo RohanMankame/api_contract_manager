@@ -33,7 +33,7 @@ function RateCardItem({ rateCard, onRefresh, onManageTiers }) {
                         className="group inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-500 hover:ring-1 hover:ring-indigo-500 focus:outline-none"
                     >
                         <EditIcon className="-ml-0.5 mr-2 h-4 w-4 transition-colors duration-200" />
-                        Edit Dates
+                        Edit Rate-Card
                     </button>
                     {/* Manage Tiers (Bulk Add/Edit) */}
                     <button
